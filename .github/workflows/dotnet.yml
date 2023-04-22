@@ -1,4 +1,9 @@
 name: create-containers
+permissions:
+  actions: write
+  packages: write
+  contents: read
+
 env:
   imageRepository: 'frontend'
   containerRegistry: 'ghcr.io/vriesmarcel'

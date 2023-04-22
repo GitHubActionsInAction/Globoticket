@@ -3,6 +3,9 @@
 
 name: Compile and Test --fast feedback
 
+env:
+  GH_TOKEN: ${{ github.token }}
+
 on:
   push:
     branches: [ "main" ]

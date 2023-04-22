@@ -4,7 +4,7 @@
 name: Compile and Test --fast feedback
 permissions:
   actions: write
-  
+  contents: read
 env:
   GH_TOKEN: ${{ github.token }}
 

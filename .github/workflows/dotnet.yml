@@ -1,8 +1,13 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
-
+name: create-containers
+env:
+  imageRepository: 'frontend'
+  containerRegistry: 'marcelv'
+  dockerfilePath: 'frontend/Dockerfile'
+  deploymentFile: 'frontend.yaml'
+  namespace: 'globoticket'
 on:
   push:
     branches: [ "main" ]
@@ -16,10 +21,28 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Login to DockerHub
+      uses: docker/login-action@v2 
+      with:
+        username: ${{ secrets.DOCKER_HUB__USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
     
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Build an image from Dockerfile
+      run: |
+        docker build -t ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}} -f ${{env.dockerfilePath}} ${{github.workspace}}
+        
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: '${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: 'trivy-results.sarif'
+
+    - name: push image to ACR
+      run: |
+        docker push ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}

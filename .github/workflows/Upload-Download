@@ -1,0 +1,36 @@
+name: Upload and Download arbitrary artifacts
+
+on:
+  workflow_dispatch:
+env:
+  deploymentFile: file-I-want-to-use-in-deploy-phase.txt
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: create a file we use in next job
+      run: |
+        touch ${{github.workspace}}/${{env.deploymentFile}}
+        
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        name: deployfile
+        path: ${{github.workspace}}/${{env.deploymentFile}}
+        
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: deployfile
+    - name: show files downloaded
+      run: |
+        ls  ${{github.workspace}}
+        

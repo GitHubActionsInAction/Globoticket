@@ -17,7 +17,7 @@ jobs:
         touch ${{github.workspace}}/${{env.deploymentFile}}
         
     - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.4
+      uses: actions/upload-artifact@v3
       with:
         name: deployfile
         path: ${{github.workspace}}/${{env.deploymentFile}}
@@ -27,7 +27,7 @@ jobs:
     needs: build
     steps:
     - name: Download artifact from build job
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: deployfile
     - name: show files downloaded

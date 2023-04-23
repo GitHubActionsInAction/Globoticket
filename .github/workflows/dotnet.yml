@@ -1,4 +1,4 @@
-name: create-containers
+name: create-container-frontend
 permissions:
   actions: write
   packages: write
@@ -31,13 +31,15 @@ jobs:
     - name: Build an image from Dockerfile
       run: |
         docker build -t ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}} -f ${{env.dockerfilePath}} ${{github.workspace}}
-        
+    
+    #scan the containers on known vulnerabilities and break when they are found at level High and Critical    
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: '${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}'
-        format: 'sarif'
-        output: 'trivy-results.sarif'
+        format: 'table'
+        severity: 'CRITICAL,HIGH'
+        exit-code: '1'
         
     - name: push image to the registry
       run: |

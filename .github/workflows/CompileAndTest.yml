@@ -11,6 +11,10 @@ env:
 on:
   push:
     branches: [ "main" ]
+    paths:
+    - 'frontend/**'
+    - 'catalog/**'
+    - 'ordering/**'
   pull_request:
     branches: [ "main" ]
     paths:

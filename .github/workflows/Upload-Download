@@ -3,7 +3,7 @@ name: Upload and Download arbitrary artifacts
 on:
   workflow_dispatch:
 env:
-  deploymentFile: file-I-want-to-use-in-deploy-phase.txt
+  deploymentFile: 'file-I-want-to-use-in-deploy-phase.txt'
 jobs:
 
   build:

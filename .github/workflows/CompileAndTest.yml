@@ -33,4 +33,4 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     
     - name: trigger next workfow 
-      run: gh workflow run create-containers
+      run: gh workflow run create-container-frontend

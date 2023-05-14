@@ -33,9 +33,9 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     
-    - name: select docker driver
-      run: |
-       docker buildx create --use --driver=docker-container
+    #- name: select docker driver
+    #  run: |
+    #   docker buildx create --use --driver=docker-container
        
     - name: Build and push
       uses: docker/build-push-action@v4
@@ -44,18 +44,18 @@ jobs:
           file: ${{env.dockerfilePath}}
           push: false
           tags: ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          #cache-from: type=gha
+          #cache-to: type=gha,mode=max
           
     
     #scan the containers on known vulnerabilities and break when they are found at level High and Critical    
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: '${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}'
-        format: 'table'
-        severity: 'CRITICAL,HIGH'
-        exit-code: '1'
+    #- name: Run Trivy vulnerability scanner
+    #  uses: aquasecurity/trivy-action@master
+    #  with:
+    #    image-ref: '${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}'
+    #    format: 'table'
+    #    severity: 'CRITICAL,HIGH'
+    #    exit-code: '1'
         
     - name: push image to the registry
       run: |

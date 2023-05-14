@@ -32,7 +32,11 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-        
+    
+    - name: select docker driver
+      run: |
+       docker buildx create --use --driver=docker-container
+       
     - name: Build and push
       uses: docker/build-push-action@v4
       with:

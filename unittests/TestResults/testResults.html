@@ -1,0 +1,110 @@
+﻿<html xmlns:tp="http://schemas.datacontract.org/2004/07/Microsoft.VisualStudio.TestPlatform.Extensions.HtmlLogger.ObjectModel" xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+  <body>
+    <h1>Test run details</h1>
+    <div class="summary">
+      <div class="block"><span>Total tests</span><div class="total-tests">4</div><br></div>
+      <div class="block"><span>Passed  : </span><span class="passedTests">3</span><br><span>Failed  : </span><span class="failedTests">1</span><br><span>Skipped : </span><span class="skippedTests">0</span><br></div>
+      <div class="block"><span>Pass percentage</span><div class="pass-percentage">75 %</div><br></div>
+      <div class="block"><span>Run duration</span><div class="test-run-time">761ms</div><br></div><br></div>
+    <h2>Failed Results</h2>
+    <div class="list-row" onclick="ToggleClass('1016125072-failedResult')">/mnt/c/source/actions-book/github-actions-in-action/unittests/bin/Debug/net6.0/unittests.dll</div>
+    <div class="inner-row" Id="1016125072-failedResult" style="display:block;">
+      <div class="leaf-division">
+        <div><span class="fail">✘</span><span> validate numbers are odd</span><div class="duration"><span>15ms</span><br></div>
+        </div>
+        <div class="error-info">
+    Error: <span class="error-message"><pre>Assert.IsTrue failed. </pre></span><br>
+    Stack trace: <span class="error-stack-trace"><pre>   at unittests.Fast_Unit_Tests.numbers_are_odd() in /mnt/c/source/actions-book/github-actions-in-action/unittests/UnitTest1.cs:line 19
+</pre></span><br></div>
+      </div>
+    </div>
+    <h2>All Results</h2>
+    <div class="list-row" onclick="ToggleClass('1016125072')">/mnt/c/source/actions-book/github-actions-in-action/unittests/bin/Debug/net6.0/unittests.dll</div>
+    <div class="inner-row" Id="1016125072" style="display:none;">
+      <div class="leaf-division">
+        <div><span class="pass">✔</span><span> validate numbers are &gt; 0</span><div class="duration"><span>2ms</span><br></div>
+        </div>
+        <div class="error-info"></div>
+      </div>
+      <div class="leaf-division">
+        <div><span class="pass">✔</span><span> validate numbers are &lt; 10</span><div class="duration"><span>&lt; 1ms</span><br></div>
+        </div>
+        <div class="error-info"></div>
+      </div>
+      <div class="leaf-division">
+        <div><span class="fail">✘</span><span> validate numbers are odd</span><div class="duration"><span>15ms</span><br></div>
+        </div>
+        <div class="error-info">
+    Error: <span class="error-message"><pre>Assert.IsTrue failed. </pre></span><br>
+    Stack trace: <span class="error-stack-trace"><pre>   at unittests.Fast_Unit_Tests.numbers_are_odd() in /mnt/c/source/actions-book/github-actions-in-action/unittests/UnitTest1.cs:line 19
+</pre></span><br></div>
+      </div>
+      <div class="leaf-division">
+        <div><span class="pass">✔</span><span> validate numbers are even</span><div class="duration"><span>&lt; 1ms</span><br></div>
+        </div>
+        <div class="error-info"></div>
+      </div>
+    </div>
+  </body><script language="javascript">
+        function ToggleClass(id) {
+        var elem = document.getElementById(id);
+        if (elem.style.display == "none") {
+        elem.style.display = "block";
+        }
+        else {
+        elem.style.display = "none";
+        }
+        }
+      </script><style>
+        body { font-family: Calibri, Verdana, Arial, sans-serif; background-color: White; color: Black; }
+        h2 {
+        margin-top: 15px;
+        margin-bottom:10px;
+        }
+        pre {
+        white-space: pre-wrap;
+        }
+        .summary {font-family:monospace;
+        display: -webkit-flex; /* Safari */
+        -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+        display: flex;
+        flex-wrap: wrap;
+        }
+        .row {
+        border: 2px solid #ffffff;
+        width:100%;
+        cursor:pointer;
+        background-color:#d7e9fa;
+        }
+        .list-row {
+        border: 2px solid #ffffff;
+        width:100%;
+        cursor:pointer;
+        background-color:#ffffff;
+        }
+        .inner-row{
+        border: 2px solid #ffffff;
+        padding-left:1%;
+        margin-left:1%;
+        background-color:#ffffff;
+        }
+        .block{
+        width : 150px;
+        }
+        .leaf-division{
+        border: 2px solid #ffffff;
+        background-color:#e6eff7;
+        }
+        .pass { color: #0c0; }
+        .fail { color: #c00; }
+        .error-message { color : brown; }
+        .error-stack-trace { color: brown; }
+        .duration {float:right;padding-right:1%;}
+        .total-tests { font-size : 30px}
+        .test-run-time { font-size : 30px}
+        .pass-percentage { font-size : 30px}
+        .error-info{
+        margin-left:16px;
+        }
+      </style>
+</html>

@@ -13,10 +13,10 @@ jobs:
           echo "## Test results" >> jobsummary.md
           echo "| **Test Name** | **Result**|" >> jobsummary.md
           echo "|--|--|" >> jobsummary.md
-          echo "| validate numers are > 0 |	:white_check_mark: |" >> jobsummary.md
-          echo "| validate numers are < 10 |	:white_check_mark: |" >> jobsummary.md
-          echo "| validate numers are odd |	:x: |" >> jobsummary.md
-          echo "| validate numers are even|	:white_check_mark: |" >> jobsummary.md
+          echo "| validate numbers are > 0 |:white_check_mark: |" >> jobsummary.md
+          echo "| validate numbers are < 10 |:white_check_mark: |" >> jobsummary.md
+          echo "| validate numbers are odd |:x: |" >> jobsummary.md
+          echo "| validate numbers are even|:white_check_mark: |" >> jobsummary.md
       - name: add to jobsummary
         run: |
           cat jobsummary.md >> "$GITHUB_STEP_SUMMARY"

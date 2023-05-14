@@ -9,6 +9,7 @@ env:
   GH_TOKEN: ${{ github.token }}
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
     paths:
@@ -37,7 +38,10 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --logger "html;logfilename=testResults.html"
+    - name: Output the results to the actions jobsummary
+      if: always()
+      run: echo $(find . -name testResults.html) >> "$GITHUB_OUTPUT"
     
     - name: trigger next workfow 
       run: gh workflow run create-container-frontend

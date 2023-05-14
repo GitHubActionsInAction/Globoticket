@@ -19,4 +19,4 @@ jobs:
           echo "| validate numers are even|	pass |" >> jobsummary.md
       - name: add to jobsummary
         run: |
-          cat jobsummary.md >> "$GITHUB_OUTPUT"
+          cat jobsummary.md >> "$GITHUB_STEP_SUMMARY"

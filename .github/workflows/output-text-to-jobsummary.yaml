@@ -10,7 +10,6 @@ jobs:
       - name: Generate markdown
         id: markdown
         run: |
-          echo "## Job summary" > jobsummary.md
           echo "### Test results" >> jobsummary.md
           echo "| **Test Name** | **Result**|" >> jobsummary.md
           echo "|--|--|" >> jobsummary.md

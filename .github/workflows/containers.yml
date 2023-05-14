@@ -44,6 +44,6 @@ jobs:
           file: ${{env.dockerfilePath}}
           push: true
           tags: ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          #cache-from: type=gha
+          #cache-to: type=gha,mode=max
           

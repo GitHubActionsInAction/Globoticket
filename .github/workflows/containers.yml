@@ -32,10 +32,17 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-    
-    - name: Build an image from Dockerfile
-      run: |
-        docker build -t ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}} -f ${{env.dockerfilePath}} ${{github.workspace}}
+        
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+          context: ${{github.workspace}}
+          file: ${{env.dockerfilePath}}
+          push: false
+          tags: ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          
     
     #scan the containers on known vulnerabilities and break when they are found at level High and Critical    
     - name: Run Trivy vulnerability scanner

@@ -33,15 +33,19 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+      
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+
+    - name: add markdown report logger
+      run: dotnet add package LiquidTestReports.Markdown
     - name: Test
-      run: dotnet test --logger "html;logfilename=testResults.html"
+      run: dotnet test --logger "liquid.md;logfilename=testResults.md"
     - name: Output the results to the actions jobsummary
       if: always()
-      run: echo $(find . -name testResults.html) >> "$GITHUB_OUTPUT"
+      run: echo $(find . -name testResults.md) >> "$GITHUB_OUTPUT"
     
     - name: trigger next workfow 
       run: gh workflow run create-container-frontend

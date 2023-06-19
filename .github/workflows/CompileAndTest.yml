@@ -46,7 +46,7 @@ jobs:
       run: dotnet test --logger "liquid.md;logfilename=testResults.md"
     - name: Output the results to the actions jobsummary
       if: always()
-      run: echo $(find . -name testResults.md) >> "$GITHUB_OUTPUT"
+      run: cat $(find . -name testResults.md) >> "$GITHUB_OUTPUT"
     
     - name: trigger next workfow 
       run: gh workflow run create-container-frontend

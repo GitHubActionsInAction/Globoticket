@@ -40,11 +40,7 @@ jobs:
       run: dotnet build --no-restore
 
     - name: add markdown report logger for frontend project
-      run: dotnet add frontend/frontend.csproj  package LiquidTestReports.Markdown
-    - name: add markdown report logger for catalog project
-      run: dotnet add catalog/catalog.csproj  package LiquidTestReports.Markdown
-    - name: add markdown report logger for ordering project
-      run: dotnet add ordering/ordering.csproj  package LiquidTestReports.Markdown
+      run: dotnet add unittests/unittests.csproj  package LiquidTestReports.Markdown
       
     - name: Test
       run: dotnet test --logger "liquid.md;logfilename=testResults.md"

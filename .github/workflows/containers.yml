@@ -11,39 +11,59 @@ env:
   deploymentFile: 'frontend.yaml'
   namespace: 'globoticket'
 on:
+  release:
+    types: [created]
   workflow_dispatch:
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.refname }}
-  # If this is enabled it will cancel current running and start latest
-  cancel-in-progress: true
 
 jobs:
   build:
       
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-  
-    - name: Login to DockerHub
-      uses: docker/login-action@v2 
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with: 
+          fetch-depth: 0
+
+      - name: Install GitVersion 
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        with: 
+          versionSpec: '5.x'
+
+      - name: Determine Version 
+        id: gitversion 
+        uses: gittools/actions/gitversion/execute@v0.9.7 
+
+      - name: Login to GitHUb
+        uses: docker/login-action@v2 
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
     
-    - name: select docker driver
-      run: |
-        docker buildx create --use --driver=docker-container
+      - name: select docker driver
+        run: |
+          docker buildx create --use --driver=docker-container
        
-    - name: Build and push
-      uses: docker/build-push-action@v4
-      with:
-          context: ${{github.workspace}}
-          file: ${{env.dockerfilePath}}
-          push: true
-          tags: ${{env.containerRegistry}}/${{env.imageRepository}}:${{github.run_number}}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+            context: ${{github.workspace}}
+            file: ${{env.dockerfilePath}}
+            push: true
+            tags: ${{env.containerRegistry}}/${{env.imageRepository}}:${{env.GitVersion_SemVer}}
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+      - name: Replace tokens
+        uses: cschleiden/replace-tokens@v1.0
+        with:
+          files: ${{github.workspace}}/deployment-automation/${{env.deploymentFile}}
+        env: 
+          Build.BuildId: ${{env.GitVersion_SemVer}}
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployfile
+          path: ${{github.workspace}}/deployment-automation/${{env.deploymentFile}}
+

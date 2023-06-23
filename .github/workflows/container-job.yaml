@@ -9,7 +9,7 @@ jobs:
     container:
       image: mcr.microsoft.com/dotnet/sdk:6.0
       volumes:
-        - ${{GITHUB_WORKSPACE}}:${{GITHUB_WORKSPACE}}
+        - ${{env.GITHUB_WORKSPACE}}:${{env.GITHUB_WORKSPACE}}
     steps:
       - name: Build with dotnet
         run: dotnet build frontend/frontend.csproj --configuration Release

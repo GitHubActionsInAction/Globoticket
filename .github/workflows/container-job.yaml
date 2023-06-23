@@ -1,0 +1,24 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  container-build-job:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:6.0
+      volumes:
+        - ${{GITHUB_WORKSPACE}}:${{GITHUB_WORKSPACE}}
+    steps:
+      - name: Build with dotnet
+        run: dotnet build frontend/frontend.csproj --configuration Release
+
+      - name: dotnet publish
+        run: dotnet publish frontend/frontend.csproj -c Release -o /app/publish
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend
+          path: /app/publish

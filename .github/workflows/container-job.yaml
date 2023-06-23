@@ -12,13 +12,13 @@ jobs:
         - ${{github.workspace}}:${{github.workspace}}
     steps:
       - name: Build with dotnet
-        run: dotnet build frontend/frontend.csproj --configuration Release
+        run: dotnet build ${{github.workspace}}/frontend/frontend.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish frontend/frontend.csproj -c Release -o /app/publish
+        run: dotnet publish ${{github.workspace}}/frontend/frontend.csproj -c Release -o ${{github.workspace}}/app/publish
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: frontend
-          path: /app/publish
+          path: ${{github.workspace}}/app/publish

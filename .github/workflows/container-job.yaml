@@ -18,7 +18,7 @@ jobs:
       - name: find __w folders
         run: ls /__w
       - name: find working dir folders
-        run: ls
+        run: ls /__w/github-actions-in-action
         
       - name: Build with dotnet
         run: dotnet build ${{github.workspace}}/frontend/frontend.csproj --configuration Release

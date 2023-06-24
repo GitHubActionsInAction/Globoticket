@@ -15,6 +15,8 @@ jobs:
         run: |
           ls /
           ls /src
+          ls /_w
+          ls
         
       - name: Build with dotnet
         run: dotnet build ${{github.workspace}}/frontend/frontend.csproj --configuration Release

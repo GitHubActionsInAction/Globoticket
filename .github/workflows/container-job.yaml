@@ -11,6 +11,9 @@ jobs:
       volumes:
         - ${{github.workspace}}:${{github.workspace}}
     steps:
+      - name: find csproj files
+        run: find -L ${{github.workspace}} -name *.csproj
+        
       - name: Build with dotnet
         run: dotnet build ${{github.workspace}}/frontend/frontend.csproj --configuration Release
 

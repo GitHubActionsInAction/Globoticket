@@ -18,7 +18,7 @@ jobs:
       - name: find __w folders
         run: ls /__w
       - name: find working dir folders
-        run: ls /__w/github-actions-in-action
+        run: ls -R /__w/github-actions-in-action
       - name: find contents of github/home
         run: ls -R /github/home
         

@@ -11,25 +11,16 @@ jobs:
       volumes:
         - ${{github.workspace}}:/src
     steps:
-      - name: find root folders
-        run: ls /
-      - name: find src folders
-        run: ls /src
-      - name: find __w folders
-        run: ls /__w
-      - name: find working dir folders
-        run: ls -R /__w/github-actions-in-action
-      - name: find contents of github/home
-        run: ls -R /github/home
+      - uses: actions/checkout@v3
         
       - name: Build with dotnet
-        run: dotnet build ${{github.workspace}}/frontend/frontend.csproj --configuration Release
+        run: dotnet build frontend/frontend.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish ${{github.workspace}}/frontend/frontend.csproj -c Release -o ${{github.workspace}}/app/publish
+        run: dotnet publish frontend/frontend.csproj -c Release -o /app/publish
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: frontend
-          path: ${{github.workspace}}/app/publish
+          path: /app/publish

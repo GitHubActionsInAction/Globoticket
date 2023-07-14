@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: ordering
-        image: psgloboticket.azurecr.io/ordering
+        image: ghcr.io/vriesmarcel/ordering:#{Build.version}#
         resources:
           requests:
             memory: "500Mi"

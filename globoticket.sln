@@ -15,7 +15,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ordering", "ordering\ordering.csproj", "{0AA4868D-A125-4336-B055-07DBA6D61E6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unittests", "unittests\unittests.csproj", "{049210C3-222F-4C03-AB42-2CFD0708AA0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "unittests", "unittests\unittests.csproj", "{049210C3-222F-4C03-AB42-2CFD0708AA0E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deployment-automation", "deployment-automation", "{5564CE20-A8A9-4552-9A30-19E18E65524D}"
+	ProjectSection(SolutionItems) = preProject
+		deployment-automation\catalog.yaml = deployment-automation\catalog.yaml
+		deployment-automation\frontend.yaml = deployment-automation\frontend.yaml
+		deployment-automation\ordering.yaml = deployment-automation\ordering.yaml
+		deployment-automation\sqlserver.yaml = deployment-automation\sqlserver.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

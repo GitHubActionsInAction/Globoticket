@@ -1,28 +1,37 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ordering
+  labels:
+    app: ordering
+spec:
+  selector:
+    app: ordering
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 80
+  type: ClusterIP
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
-  namespace: globoticket
+  name: ordering
   labels:
-    app: frontend
+    app: ordering
 spec:
-  replicas: 3
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 2
-      maxUnavailable: 0
+  replicas: 1
   selector:
     matchLabels:
-      app: frontend
+      app: ordering
   template:
     metadata:
       labels:
-        app: frontend
+        app: ordering
     spec:
       containers:
-      - name: frontend
-        image: ghcr.io/vriesmarcel/frontend:#{Build.version}#
+      - name: ordering
+        image: psgloboticket.azurecr.io/ordering
         resources:
           requests:
             memory: "500Mi"
@@ -33,10 +42,6 @@ spec:
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
-        - name: ApiConfigs__ConcertCatalog__Uri
-          value: http://catalog:8080
-        - name: ApiConfigs__Ordering__Uri
-          value: http://ordering:8080
         ports:
         - containerPort: 80
         imagePullPolicy: Always

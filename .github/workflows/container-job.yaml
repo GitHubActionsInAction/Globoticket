@@ -1,0 +1,26 @@
+name: Build inside container
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  container-build-job:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:6.0
+      volumes:
+        - ${{github.workspace}}:/src
+    steps:
+      - uses: actions/checkout@v3
+        
+      - name: Build with dotnet
+        run: dotnet build frontend/frontend.csproj --configuration Release
+
+      - name: dotnet publish
+        run: dotnet publish frontend/frontend.csproj -c Release -o /app/publish
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend
+          path: /app/publish

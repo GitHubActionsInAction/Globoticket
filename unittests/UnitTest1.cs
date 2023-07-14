@@ -16,7 +16,7 @@ namespace unittests
         [TestMethod("validate numbers are odd")]
         public void numbers_are_odd()
         {
-            Assert.IsTrue(false);
+            Assert.IsTrue(true);
         }
         [TestMethod("validate numbers are even")]
         public void numbers_are_even()

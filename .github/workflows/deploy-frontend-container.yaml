@@ -26,6 +26,7 @@ jobs:
       - name: get release artifacts for deployment, picks data from latest release
         uses: dsaltares/fetch-gh-release-asset@master
         with:
+          version: ${{ github.event.release.id }}
           regex: true
           file: ".*"
           target: './'

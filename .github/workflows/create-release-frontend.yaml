@@ -17,6 +17,9 @@ jobs:
     if: ${{ github.event.registry_package.package_version.container_metadata.tag.name != '' }}
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+ 
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
         with:
@@ -29,8 +32,6 @@ jobs:
         with:
           repo_token: "${{ secrets.EXTENDED_ACCESSTOKEN }}"
           automatic_release_tag: "latest"
-          prerelease: true
-          title: "Release ${{ github.event.registry_package.package_version.container_metadata.tag.name}}"
           files: |
             ${{github.workspace}}/deployment-automation/${{env.deploymentFile}}
 

@@ -13,15 +13,33 @@ env:
   GITHUB_CONTEXT: ${{ toJSON(github) }}
   
 on:
-  registry_package: 
+  release: 
      types: [published] 
   workflow_dispatch:
 
 jobs:
   deploy:
-    if: ${{ github.event.registry_package.package_version.container_metadata.tag.name != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: data from push to registry
         run: echo "$GITHUB_CONTEXT"
-  
+      - name: get release artifacts for deployment, picks data from latest release
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          regex: true
+          file: ".*"
+          target: './'
+
+      - name: set kubernetes context
+        uses: azure/k8s-set-context@v1
+        id: setcontext
+        with:
+          method: kubeconfig
+          kubeconfig: ${{secrets.KUBECONFIG}} 
+
+      - name: Deploy to AKS
+        uses: Azure/k8s-deploy@v4
+        with:
+          namespace: '${{env.namespace}}'
+          manifests: |
+             ./${{env.deploymentFile}}

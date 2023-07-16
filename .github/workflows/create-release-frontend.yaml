@@ -1,0 +1,37 @@
+name: create release frontend
+permissions:
+  actions: write
+  packages: write
+  contents: read
+
+env:
+  deploymentFile: 'frontend.yaml'
+
+on:
+  registry_package: 
+     types: [published] 
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    if: ${{ github.event.registry_package.package_version.container_metadata.tag.name != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Replace tokens
+        uses: cschleiden/replace-tokens@v1.0
+        with:
+          files: ${{github.workspace}}/deployment-automation/${{env.deploymentFile}}
+        env: 
+          Build.version: ${{github.event.registry_package.package_version.container_metadata.tag.name}}
+
+      - name: create a relase with version provided by package push
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.EXTENDED_ACCESSTOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Release ${{ github.event.registry_package.package_version.container_metadata.tag.name}}"
+          files: |
+            ${{github.workspace}}/deployment-automation/${{env.deploymentFile}}
+
+  

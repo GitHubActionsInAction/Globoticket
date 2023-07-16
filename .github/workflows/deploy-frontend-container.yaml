@@ -37,6 +37,7 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{secrets.KUBECONFIG}} 
+ 
       - name: provide pull secrets so we can pull the image from gitHub
         uses: azure/k8s-create-secret@v4
         with:

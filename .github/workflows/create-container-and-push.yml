@@ -21,7 +21,10 @@ on:
       namespace:
         required: true
         type: string
-  
+    secrets:
+      EXTENDED_ACCESSTOKEN:
+        required: true
+
   workflow_dispatch:
     inputs:
       imageRepository:

@@ -1,4 +1,4 @@
-name: Upload and Download arbitrary artifacts
+name: "chapter 08: Upload and Download arbitrary artifacts"
 
 on:
   workflow_dispatch:

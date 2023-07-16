@@ -1,7 +1,9 @@
-name: Build inside container
+name: "chapter 08: Build inside container"
 on:
   push:
-    branches: [ main ]
+    branches: ["main"]
+    paths:
+    - 'frontend/**'
   workflow_dispatch:
 jobs:
   container-build-job:

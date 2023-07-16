@@ -28,10 +28,11 @@ jobs:
           Build.version: ${{github.event.registry_package.package_version.container_metadata.tag.name}}
 
       - name: create a relase with version provided by package push
-        uses: marvinpinto/action-automatic-releases@latest
+        uses: softprops/action-gh-release
         with:
-          repo_token: "${{ secrets.EXTENDED_ACCESSTOKEN }}"
-          automatic_release_tag: "latest"
+          token: "${{ secrets.EXTENDED_ACCESSTOKEN }}"
+          tag_name: ${{github.event.registry_package.package_version.container_metadata.tag.name}}
+          generate_release_notes: true
           files: |
             ${{github.workspace}}/deployment-automation/${{env.deploymentFile}}
 

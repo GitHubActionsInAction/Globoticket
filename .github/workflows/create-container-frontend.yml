@@ -11,8 +11,10 @@ env:
   deploymentFile: 'frontend.yaml'
   namespace: 'globoticket'
 on:
-  release:
-    types: [created]
+  push:
+    branches: ["main"]
+    paths:
+    - 'frontend/**'
   workflow_dispatch:
 
 jobs:

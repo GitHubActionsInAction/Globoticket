@@ -1,4 +1,4 @@
-name: Compile and Test --fast feedback plus SBOM
+name: "chapter 08: Compile and Test --fast feedback plus SBOM"
 permissions:
   actions: write
   contents: read

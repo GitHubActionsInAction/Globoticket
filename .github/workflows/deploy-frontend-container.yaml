@@ -75,7 +75,7 @@ jobs:
       - name: provide pull secrets so we can pull the image from gitHub
         uses: azure/k8s-create-secret@v4
         with:
-            namespace: '${{env.namespace}}-production'
+            namespace: '${{env.namespace}}'
             secret-name: 'pullsecret'
             container-registry-url: 'ghcr.io'
             container-registry-username: ${{ github.actor }}
@@ -84,6 +84,6 @@ jobs:
       - name: Deploy to AKS
         uses: Azure/k8s-deploy@v4
         with:
-          namespace: '${{env.namespace}}-production'
+          namespace: '${{env.namespace}}'
           manifests: |
              ./${{env.deploymentFile}}

@@ -1,0 +1,23 @@
+name: "chapter 09: create-container-and-push-frontend"
+permissions:
+  actions: write
+  packages: write
+  contents: read
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+    - 'frontend/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    uses: ./.github/workflows/create-container-and-push@main
+    with:
+      imageRepository: 'frontend'
+      containerRegistry: 'ghcr.io/vriesmarcel'
+      dockerfilePath: 'frontend/Dockerfile'
+      deploymentFile: 'frontend.yaml'
+      namespace: 'globoticket'

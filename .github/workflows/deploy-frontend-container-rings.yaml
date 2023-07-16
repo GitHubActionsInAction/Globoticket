@@ -1,4 +1,4 @@
-name: "chapter 09: deploy-frontend-container"
+name: "chapter 09: deploy-frontend-container-rings"
 permissions:
   actions: write
   packages: write
@@ -15,7 +15,7 @@ on:
 
 
 jobs:
-  deploy-staging:
+  deploy:
     runs-on: ubuntu-latest
     environment:
       name: 'staging'
@@ -48,41 +48,5 @@ jobs:
         uses: Azure/k8s-deploy@v4
         with:
           namespace: '${{env.namespace}}'
-          manifests: |
-             ./${{env.deploymentFile}}
-
-  deploy-production:
-    runs-on: ubuntu-latest
-    environment:
-      name: 'production'
-    steps:
-      - name: get release artifacts for deployment, picks data from latest release
-        uses: dsaltares/fetch-gh-release-asset@master
-        with:
-          version: ${{ github.event.release.id }}
-          regex: true
-          file: ".*"
-          target: './'
-
-      - name: set kubernetes context
-        uses: azure/k8s-set-context@v3
-        id: setcontext
-        with:
-          method: kubeconfig
-          kubeconfig: ${{secrets.KUBECONFIG}} 
- 
-      - name: provide pull secrets so we can pull the image from gitHub
-        uses: azure/k8s-create-secret@v4
-        with:
-            namespace: '${{env.namespace}}-production'
-            secret-name: 'pullsecret'
-            container-registry-url: 'ghcr.io'
-            container-registry-username: ${{ github.actor }}
-            container-registry-password: ${{ secrets.EXTENDED_ACCESSTOKEN }}
-
-      - name: Deploy to AKS
-        uses: Azure/k8s-deploy@v4
-        with:
-          namespace: '${{env.namespace}}-production'
           manifests: |
              ./${{env.deploymentFile}}

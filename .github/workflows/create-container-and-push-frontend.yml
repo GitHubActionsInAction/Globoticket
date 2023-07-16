@@ -14,7 +14,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    uses: ./.github/workflows/create-container-and-push@main
+    uses: ./.github/workflows/create-container-and-push.yml
     with:
       imageRepository: 'frontend'
       containerRegistry: 'ghcr.io/vriesmarcel'

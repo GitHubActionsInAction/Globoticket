@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deployment-automation", "de
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{7DEB449F-5610-4EC3-9041-AAC69F2358AE}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\create-container-and-push.yml = .github\workflows\create-container-and-push.yml
 		.github\workflows\create-release-frontend.yaml = .github\workflows\create-release-frontend.yaml
 		.github\workflows\create-container-and-push-frontend.yml = .github\workflows\create-container-and-push-frontend.yml
 		.github\workflows\deploy-frontend-container-rings.yaml = .github\workflows\deploy-frontend-container-rings.yaml

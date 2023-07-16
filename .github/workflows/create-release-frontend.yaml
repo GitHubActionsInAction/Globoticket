@@ -10,7 +10,7 @@ env:
 on:
   registry_package: 
      types: [published] 
-  workflow_dispatch:
+
 
 jobs:
   deploy:

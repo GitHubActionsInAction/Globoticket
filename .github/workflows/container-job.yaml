@@ -1,4 +1,4 @@
-name: Build inside container
+name: "chapter 08: Build inside container"
 on:
   push:
     branches: [ main ]

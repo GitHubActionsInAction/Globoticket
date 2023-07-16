@@ -22,7 +22,7 @@ on:
         required: true
         type: string
     secrets:
-      EXTENDED_ACCESSTOKEN:
+      registryPassword:
         required: true
 
   workflow_dispatch:
@@ -71,7 +71,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.EXTENDED_ACCESSTOKEN }}
+          password: ${{ secrets.registryPassword }}
     
       - name: select docker driver
         run: |

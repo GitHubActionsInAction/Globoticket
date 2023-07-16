@@ -1,37 +1,40 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: ordering
+  name: catalog
+  namespace: globoticket
   labels:
-    app: ordering
+    app: catalog
 spec:
   selector:
-    app: ordering
+    app: catalog
   ports:
   - protocol: TCP
     port: 8080
     targetPort: 80
+    name: http
   type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ordering
+  name: catalog
+  namespace: globoticket
   labels:
-    app: ordering
+    app: catalog
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ordering
+      app: catalog
   template:
     metadata:
       labels:
-        app: ordering
+        app: catalog
     spec:
       containers:
-      - name: ordering
-        image: psgloboticket.azurecr.io/ordering
+      - name: catalog
+        image: psgloboticket.azurecr.io/catalog
         resources:
           requests:
             memory: "500Mi"
@@ -42,6 +45,8 @@ spec:
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
+        - name: CONNECTIONSTRINGS__DEFAULTCONNECTION
+          value: Server=sqlserver;Database=EventCatalogDb;User=sa;pwd=P@ssW0rd!;TrustServerCertificate=true;Persist Security Info=true;MultipleActiveResultSets=true
         ports:
         - containerPort: 80
         imagePullPolicy: Always

@@ -13,15 +13,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-    - name: call reusable workflow to build and push container images  
-      uses: ./.github/workflows/create-container-and-push.yml
-      with:
-        imageRepository: 'frontend'
-        containerRegistry: 'ghcr.io/vriesmarcel'
-        dockerfilePath: 'frontend/Dockerfile'
-        deploymentFile: 'frontend.yaml'
-        namespace: 'globoticket'
+    uses: ./.github/workflows/create-container-and-push.yml
+    with:
+      imageRepository: 'frontend'
+      containerRegistry: 'ghcr.io/vriesmarcel'
+      dockerfilePath: 'frontend/Dockerfile'
+      deploymentFile: 'frontend.yaml'
+      namespace: 'globoticket'

@@ -20,3 +20,4 @@ jobs:
       dockerfilePath: 'frontend/Dockerfile'
       deploymentFile: 'frontend.yaml'
       namespace: 'globoticket'
+      EXTENDED_ACCESSTOKEN: ${{secrets.EXTENDED_ACCESSTOKEN}}

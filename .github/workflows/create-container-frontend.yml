@@ -54,12 +54,13 @@ jobs:
             tags: ${{env.containerRegistry}}/${{env.imageRepository}}:${{env.GitVersion_SemVer}}
             cache-from: type=gha
             cache-to: type=gha,mode=max
+     
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
         with:
           files: ${{github.workspace}}/deployment-automation/${{env.deploymentFile}}
         env: 
-          Build.BuildId: ${{env.GitVersion_SemVer}}
+          Build.version: ${{env.GitVersion_SemVer}}
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3

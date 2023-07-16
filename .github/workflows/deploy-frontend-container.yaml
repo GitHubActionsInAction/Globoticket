@@ -1,0 +1,27 @@
+name: deploy-frontend-container
+permissions:
+  actions: write
+  packages: write
+  contents: read
+
+env:
+  imageRepository: 'frontend'
+  containerRegistry: 'ghcr.io/vriesmarcel'
+  dockerfilePath: 'frontend/Dockerfile'
+  deploymentFile: 'frontend.yaml'
+  namespace: 'globoticket'
+  GITHUB_CONTEXT: ${{ toJSON(github) }}
+  
+  on:
+    registry_package: 
+     types: [published] 
+    workflow_dispatch:
+
+  jobs:
+    deploy:
+      if: ${{ github.event.registry_package.package_version.container_metadata.tag.name != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: data from push to registry
+        run: echo "$GITHUB_CONTEXT"
+  

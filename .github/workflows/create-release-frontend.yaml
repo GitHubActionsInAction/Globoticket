@@ -28,7 +28,7 @@ jobs:
           Build.version: ${{github.event.registry_package.package_version.container_metadata.tag.name}}
 
       - name: create a relase with version provided by package push
-        uses: softprops/action-gh-release
+        uses: softprops/action-gh-release@v1
         with:
           token: "${{ secrets.EXTENDED_ACCESSTOKEN }}"
           tag_name: ${{github.event.registry_package.package_version.container_metadata.tag.name}}

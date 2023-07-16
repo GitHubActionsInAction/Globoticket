@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: catalog
-        image: psgloboticket.azurecr.io/catalog
+        image: ghcr.io/vriesmarcel/catalog:#{Build.version}#
         resources:
           requests:
             memory: "500Mi"

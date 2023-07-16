@@ -21,8 +21,29 @@ on:
       namespace:
         required: true
         type: string
+  
   workflow_dispatch:
-
+    inputs:
+      imageRepository:
+        required: true
+        type: string
+        default: 'frontend'
+      containerRegistry:
+        required: true
+        type: string
+        default: 'ghcr.io/vriesmarcel'
+      dockerfilePath:
+        required: true
+        type: string
+        default: 'frontend/Dockerfile'
+      deploymentFile:
+        required: true
+        type: string
+        default: 'frontend.yaml'
+      namespace:
+        required: true
+        type: string
+        default: 'globoticket'
 jobs:
   build:
       

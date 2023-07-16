@@ -14,10 +14,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    uses: ./.github/workflows/create-container-and-push.yml
-    with:
-      imageRepository: 'frontend'
-      containerRegistry: 'ghcr.io/vriesmarcel'
-      dockerfilePath: 'frontend/Dockerfile'
-      deploymentFile: 'frontend.yaml'
-      namespace: 'globoticket'
+    steps:
+    - uses: ./.github/workflows/create-container-and-push.yml
+      with:
+        imageRepository: 'frontend'
+        containerRegistry: 'ghcr.io/vriesmarcel'
+        dockerfilePath: 'frontend/Dockerfile'
+        deploymentFile: 'frontend.yaml'
+        namespace: 'globoticket'

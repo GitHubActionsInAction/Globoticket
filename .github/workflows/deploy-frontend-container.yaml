@@ -1,4 +1,4 @@
-name: deploy-frontend-container
+name: "chapter 09: deploy-frontend-container"
 permissions:
   actions: write
   packages: write

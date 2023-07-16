@@ -1,4 +1,4 @@
-name: create release frontend
+name: "chapter 09: create release frontend"
 permissions:
   actions: write
   packages: write

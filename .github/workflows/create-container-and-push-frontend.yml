@@ -20,4 +20,5 @@ jobs:
       dockerfilePath: 'frontend/Dockerfile'
       deploymentFile: 'frontend.yaml'
       namespace: 'globoticket'
+    secrets:
       registryPassword: '${{ secrets.EXTENDED_ACCESSTOKEN }}'

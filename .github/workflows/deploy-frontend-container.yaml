@@ -37,6 +37,13 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{secrets.KUBECONFIG}} 
+      - name: provide pull secrets so we can pull the image from gitHub
+        run: |
+          kubectl create secret docker-registry ghcr-login-secret 
+            --docker-server=https://ghcr.io 
+            --docker-username=${{ github.actor }} 
+            --docker-password=${{ secrets.EXTENDED_ACCESSTOKEN }}
+            --docker-email=$YOUR_EMAIL
 
       - name: Deploy to AKS
         uses: Azure/k8s-deploy@v4

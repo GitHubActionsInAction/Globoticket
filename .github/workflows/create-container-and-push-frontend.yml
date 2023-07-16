@@ -15,7 +15,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: ./.github/workflows/create-container-and-push.yml
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: call reusable workflow to build and push container images  
+      uses: ./.github/workflows/create-container-and-push.yml
       with:
         imageRepository: 'frontend'
         containerRegistry: 'ghcr.io/vriesmarcel'

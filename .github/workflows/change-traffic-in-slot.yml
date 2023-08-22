@@ -1,0 +1,58 @@
+name: "chapter 09: reusable workflow traffic shifting"
+permissions:
+  actions: write
+
+on:
+  workflow_call:
+    inputs:
+      slotname:
+        required: true
+        type: string
+      resourcegroup:
+        required: true
+        type: string
+      appname:
+        required: true
+        type: string
+      percentage:
+        required: true
+        type: string
+
+    secrets:
+      azurecredentials:
+        required: true
+jobs:       
+  ten_percent_traffic:
+    runs-on: ubuntu-latest
+    environment:
+      name: 'staging'
+
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.azurecredentials }}
+        
+      - name: Move 10% trafic to staging
+        uses: Azure/cli@v1.0.7
+        with:
+          inlinescript: 'az webapp traffic-routing set --distribution ${{inputs.slotname}}=$${{inputs.percentage}}  --name ${{inputs.appname}} --resource-group ${{inputs.resourcegroup}}'
+      - name: validate the deployment is still healthy for 10 seconds
+        run: |
+            MAX_ATTEMPTS=10
+            HEALTH_ENDPOINT="https://globoticket-staging.azurewebsites.net/health/ready"
+             for ((attempt=1; attempt <= MAX_ATTEMPTS; attempt++)); do
+              response=$(curl -s "$HEALTH_ENDPOINT")
+              status=$(echo "$response" | jq -r '.status')
+
+              if [[ "$status" == "Unhealthy" ]]; then
+                echo "Health endpoint is Unhealthy."
+                exit -1
+              fi
+
+              echo "Attempt $attempt: Health endpoint is:" $status
+              sleep 1
+            done       
+
+  
+ 

@@ -27,11 +27,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deployment-automation", "de
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{7DEB449F-5610-4EC3-9041-AAC69F2358AE}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\create-container-and-push-frontend.yml = .github\workflows\create-container-and-push-frontend.yml
 		.github\workflows\create-container-and-push.yml = .github\workflows\create-container-and-push.yml
 		.github\workflows\create-release-frontend.yaml = .github\workflows\create-release-frontend.yaml
-		.github\workflows\create-container-and-push-frontend.yml = .github\workflows\create-container-and-push-frontend.yml
 		.github\workflows\deploy-frontend-container-rings.yaml = .github\workflows\deploy-frontend-container-rings.yaml
 		.github\workflows\deploy-frontend-container.yaml = .github\workflows\deploy-frontend-container.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI", "CI", "{26E9DCEF-611E-4616-BD53-ABFA3F0A1C3A}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\create-container-and-push-frontend.yml = .github\workflows\create-container-and-push-frontend.yml
+		.github\workflows\create-container-and-push.yml = .github\workflows\create-container-and-push.yml
 	EndProjectSection
 EndProject
 Global
@@ -59,6 +65,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{26E9DCEF-611E-4616-BD53-ABFA3F0A1C3A} = {7DEB449F-5610-4EC3-9041-AAC69F2358AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E9F232D3-5386-4E57-B49F-7AF54A4A8843}

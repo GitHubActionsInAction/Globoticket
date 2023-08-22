@@ -26,15 +26,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deployment-automation", "de
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{7DEB449F-5610-4EC3-9041-AAC69F2358AE}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\deploy-frontend-container-rings.yaml = .github\workflows\deploy-frontend-container-rings.yaml
-		.github\workflows\deploy-frontend-container.yaml = .github\workflows\deploy-frontend-container.yaml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI", "CI", "{26E9DCEF-611E-4616-BD53-ABFA3F0A1C3A}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\create-container-and-push-frontend.yml = .github\workflows\create-container-and-push-frontend.yml
-		.github\workflows\CompileAndTestFastFeedback.yml = .github\workflows\CompileAndTestFastFeedback.yml
+		.github\workflows\compile-and-test-fsast-feedback.yml = .github\workflows\compile-and-test-fsast-feedback.yml
 		.github\workflows\create-container-and-push.yml = .github\workflows\create-container-and-push.yml
 		.github\workflows\create-release-frontend.yaml = .github\workflows\create-release-frontend.yaml
 	EndProjectSection
@@ -42,6 +38,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CD", "CD", "{220DA71A-7173-4711-852D-D601FFE59B46}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\change-traffic-in-slot.yml = .github\workflows\change-traffic-in-slot.yml
+		.github\workflows\deploy-frontend-container-rings.yaml = .github\workflows\deploy-frontend-container-rings.yaml
+		.github\workflows\deploy-frontend-container.yaml = .github\workflows\deploy-frontend-container.yaml
 		.github\workflows\red-green-deployment.yml = .github\workflows\red-green-deployment.yml
 	EndProjectSection
 EndProject

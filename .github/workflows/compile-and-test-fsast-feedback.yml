@@ -42,6 +42,3 @@ jobs:
     - name: Output the results to the actions jobsummary
       if: always()
       run: cat $(find . -name testResults.md) >> $GITHUB_STEP_SUMMARY
-    
-    - name: trigger next workfow 
-      run: gh workflow run create-container-frontend

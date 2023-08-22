@@ -1,4 +1,4 @@
-name: "chapter 08: Compile and Test --fast feedback"
+name: "chapter 08: Compile and Test fast feedback"
 permissions:
   actions: write
   contents: read

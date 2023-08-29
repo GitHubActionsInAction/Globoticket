@@ -11,12 +11,7 @@ on:
     - 'frontend/**'
     - 'catalog/**'
     - 'ordering/**'
-  pull_request:
-    branches: [ "main" ]
-    paths:
-    - 'frontend/**'
-    - 'catalog/**'
-    - 'ordering/**'
+
 jobs:
   build:
 

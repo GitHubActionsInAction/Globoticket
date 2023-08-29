@@ -1,4 +1,4 @@
-name: chapter 9 red green deployment globoticket
+name: "chapter 09: red green deployment globoticket"
 env:
   HomePage: ''
   appname: 'globoticket'

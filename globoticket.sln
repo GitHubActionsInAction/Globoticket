@@ -30,7 +30,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI", "CI", "{26E9DCEF-611E-4616-BD53-ABFA3F0A1C3A}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\create-container-and-push-frontend.yml = .github\workflows\create-container-and-push-frontend.yml
-		.github\workflows\compile-and-test-fsast-feedback.yml = .github\workflows\compile-and-test-fsast-feedback.yml
+		.github\workflows\compile-and-test-fast-feedback.yml = .github\workflows\compile-and-test-fast-feedback.yml
 		.github\workflows\create-container-and-push.yml = .github\workflows\create-container-and-push.yml
 		.github\workflows\create-release-frontend.yaml = .github\workflows\create-release-frontend.yaml
 	EndProjectSection

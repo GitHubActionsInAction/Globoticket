@@ -13,7 +13,7 @@ on:
 
 
 jobs:
-  deploy:
+  release:
     if: ${{ github.event.registry_package.package_version.container_metadata.tag.name != '' }}
     runs-on: ubuntu-latest
     steps:

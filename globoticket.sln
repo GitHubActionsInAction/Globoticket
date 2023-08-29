@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI", "CI", "{26E9DCEF-611E-
 		.github\workflows\compile-and-test-fast-feedback.yml = .github\workflows\compile-and-test-fast-feedback.yml
 		.github\workflows\create-container-and-push.yml = .github\workflows\create-container-and-push.yml
 		.github\workflows\create-release-frontend.yaml = .github\workflows\create-release-frontend.yaml
+		.github\workflows\security-testing.yaml = .github\workflows\security-testing.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CD", "CD", "{220DA71A-7173-4711-852D-D601FFE59B46}"

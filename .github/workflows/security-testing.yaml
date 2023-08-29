@@ -1,0 +1,93 @@
+name: "Security Testing"
+ 
+env:
+  imageRepository: 'frontend'
+  containerRegistry: 'ghcr.io/xpiritcommunityevents'
+  dockerfilePath: 'frontend/Dockerfile'
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+    - 'frontend/**'
+    - 'catalog/**'
+    - 'ordering/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+    - 'frontend/**'
+    - 'catalog/**'
+    - 'ordering/**'
+  schedule:
+    - cron: '40 17 * * 0'
+  workflow_dispatch:
+
+jobs:
+  analyzecode:
+    name: Analyze
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'csharp', 'javascript' ]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v2
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        category: "/language:${{matrix.language}}"
+ 
+    
+  analyzecontainers:    
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+      packages: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with: 
+          fetch-depth: 0
+
+      - name: Install GitVersion 
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        with: 
+          versionSpec: '5.x'
+
+      - name: Determine Version 
+        id: gitversion 
+        uses: gittools/actions/gitversion/execute@v0.9.7 
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{env.containerRegistry}}/${{env.imageRepository}}:${{env.GitVersion_SemVer}}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+        env:
+          TRIVY_USERNAME:  ${{ github.actor }}
+          TRIVY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'        

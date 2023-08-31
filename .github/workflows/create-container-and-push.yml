@@ -17,6 +17,9 @@ on:
         type: string
       deploymentFile:
         required: true
+        type: string      
+      deploymentfileFolder:
+        required: true
         type: string
       namespace:
         required: true
@@ -90,7 +93,7 @@ jobs:
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
         with:
-          files: ${{github.workspace}}/deployment-automation/${{inputs.deploymentFile}}
+          files: ${{github.workspace}}/${{inputs.deploymentfileFolder}}/${{inputs.deploymentFile}}
         env: 
           Build.version: ${{env.GitVersion_SemVer}}
 
@@ -98,5 +101,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: deployfile
-          path: ${{github.workspace}}/deployment-automation/${{inputs.deploymentFile}}
+          path: ${{github.workspace}}/${{inputs.deploymentfileFolder}}/${{inputs.deploymentFile}}
 

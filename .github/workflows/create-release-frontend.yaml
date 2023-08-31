@@ -4,9 +4,6 @@ permissions:
   packages: write
   contents: read
 
-env:
-  deploymentFile: 'frontend.yaml'
-  deploymentfileFolder: 'deployment-automation'
 on:
   registry_package: 
      types: [published] 
@@ -16,7 +13,7 @@ jobs:
   release:
     uses: ./.github/workflows/create-release.yml
     with:
-      deploymentFile: '${{ env.deploymentFile }}'
-      deploymentfileFolder: '${{ env.deploymentfileFolder }}'
+      deploymentFile: 'frontend.yaml'
+      deploymentfileFolder: 'deployment-automation'
     secrets:
       EXTENDED_ACCESSTOKEN: ${{ secrets.EXTENDED_ACCESSTOKEN }}

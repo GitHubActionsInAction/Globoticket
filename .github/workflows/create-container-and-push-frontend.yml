@@ -19,6 +19,7 @@ jobs:
       containerRegistry: 'ghcr.io/vriesmarcel'
       dockerfilePath: 'frontend/Dockerfile'
       deploymentFile: 'frontend.yaml'
+      deploymentfileFolder: 'deployment-automation'
       namespace: 'globoticket'
     secrets:
       registryPassword: '${{ secrets.EXTENDED_ACCESSTOKEN }}'

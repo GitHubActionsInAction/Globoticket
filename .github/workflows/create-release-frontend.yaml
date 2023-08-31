@@ -6,11 +6,12 @@ permissions:
 
 on:
   registry_package: 
-     types: [published] 
+     types: [published]
 
 
 jobs:
   release:
+    if: ${{ github.event.registry_package.package_version.container_metadata.tag.name != '' }}
     uses: ./.github/workflows/create-release.yml
     with:
       deploymentFile: 'frontend.yaml'

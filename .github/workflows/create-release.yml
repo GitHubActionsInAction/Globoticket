@@ -17,7 +17,6 @@ on:
         required: true
 jobs:
   release:
-    if: ${{ github.event.registry_package.package_version.container_metadata.tag.name != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

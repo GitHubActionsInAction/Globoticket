@@ -1,4 +1,4 @@
-name: "chapter 09: create release frontend"
+name: "chapter 09: create release catalog"
 permissions:
   actions: write
   packages: write
@@ -11,10 +11,10 @@ on:
 
 jobs:
   release:
-    if: ${{ github.event.registry_package.name =='frontend' && github.event.registry_package.package_version.container_metadata.tag.name != '' }}
+    if: ${{ github.event.registry_package.name =='catalog' && github.event.registry_package.package_version.container_metadata.tag.name != '' }}
     uses: ./.github/workflows/create-release.yml
     with:
-      deploymentFile: 'frontend.yaml'
+      deploymentFile: 'catalog.yaml'
       deploymentfileFolder: 'deployment-automation'
     secrets:
       EXTENDED_ACCESSTOKEN: ${{ secrets.EXTENDED_ACCESSTOKEN }}

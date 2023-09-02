@@ -13,7 +13,7 @@ WORKDIR "/src/catalog"
 RUN dotnet build "catalog.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "catalog.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "catalog.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

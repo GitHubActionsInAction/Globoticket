@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: sqlserver
+  namespace: globoticket
   labels:
     app: sqlserver
 spec:
@@ -18,6 +19,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sqlserver
+  namespace: globoticket
   labels:
     app: sqlserver
 spec:

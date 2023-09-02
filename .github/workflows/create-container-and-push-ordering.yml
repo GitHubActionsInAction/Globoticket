@@ -18,8 +18,6 @@ jobs:
       imageRepository: 'ordering'
       containerRegistry: 'ghcr.io/vriesmarcel'
       dockerfilePath: 'ordering/Dockerfile'
-      deploymentFile: 'ordering.yaml'
-      deploymentfileFolder: 'deployment-automation'
       namespace: 'globoticket'
     secrets:
       registryPassword: '${{ secrets.EXTENDED_ACCESSTOKEN }}'

@@ -15,12 +15,6 @@ on:
       dockerfilePath:
         required: true
         type: string
-      deploymentFile:
-        required: true
-        type: string      
-      deploymentfileFolder:
-        required: true
-        type: string
       namespace:
         required: true
         type: string
@@ -42,10 +36,6 @@ on:
         required: true
         type: string
         default: 'frontend/Dockerfile'
-      deploymentFile:
-        required: true
-        type: string
-        default: 'frontend.yaml'
       namespace:
         required: true
         type: string
@@ -90,16 +80,5 @@ jobs:
             cache-from: type=gha
             cache-to: type=gha,mode=max
      
-      - name: Replace tokens
-        uses: cschleiden/replace-tokens@v1.0
-        with:
-          files: ${{github.workspace}}/${{inputs.deploymentfileFolder}}/${{inputs.deploymentFile}}
-        env: 
-          Build.version: ${{env.GitVersion_SemVer}}
 
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: deployfile
-          path: ${{github.workspace}}/${{inputs.deploymentfileFolder}}/${{inputs.deploymentFile}}
 

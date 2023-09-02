@@ -18,8 +18,6 @@ jobs:
       imageRepository: 'catalog'
       containerRegistry: 'ghcr.io/vriesmarcel'
       dockerfilePath: 'catalog/Dockerfile'
-      deploymentFile: 'catalog.yaml'
-      deploymentfileFolder: 'deployment-automation'
       namespace: 'globoticket'
     secrets:
       registryPassword: '${{ secrets.EXTENDED_ACCESSTOKEN }}'

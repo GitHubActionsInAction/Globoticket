@@ -6,18 +6,13 @@ permissions:
 on:
   registry_package: 
       types: [published]
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to release'
-        required: false
-        default: ''
+
 env:
   deploymentfileFolder: 'deployment-automation'
 
 jobs:
   release:
-    if: inputs.version !='' || github.event.registry_package.package_version.container_metadata.tag.name != ''
+    if: github.event.registry_package.package_version.container_metadata.tag.name != ''
     concurrency:
       group: ${{github.event.registry_package.package_version.container_metadata.tag.name}}
       cancel-in-progress: true

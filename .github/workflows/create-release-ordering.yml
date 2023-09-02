@@ -11,7 +11,7 @@ on:
 
 jobs:
   release:
-    if: ${{ github.event.registry_package.name =='ordering' && github.event.registry_package.package_version.container_metadata.tag.name != '' }}
+    if: contains(github.event.registry_package.name ,'ordering') && github.event.registry_package.package_version.container_metadata.tag.name != ''
     uses: ./.github/workflows/create-release.yml
     with:
       deploymentFile: 'ordering.yaml'

@@ -11,11 +11,11 @@ env:
   deploymentfileFolder: 'deploymentfiles'
 
 jobs:
-  if: ${{ github.event.registry_package.package_version.container_metadata.tag.name != '' }}
-  concurrency:
-    group: ${{github.event.registry_package.package_version.container_metadata.tag.name}}
-    cancel-in-progress: true
   release:
+    if: ${{ github.event.registry_package.package_version.container_metadata.tag.name != '' }}
+    concurrency:
+      group: ${{github.event.registry_package.package_version.container_metadata.tag.name}}
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

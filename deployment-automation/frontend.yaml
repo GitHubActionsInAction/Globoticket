@@ -33,7 +33,7 @@ spec:
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
-        - name: ApiConfigs__ConcertCatalog__Uri
+        - name: ApiConfigs__EventsCatalog__Uri
           value: http://catalog:8080
         - name: ApiConfigs__Ordering__Uri
           value: http://ordering:8080

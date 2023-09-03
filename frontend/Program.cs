@@ -10,9 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<IShoppingBasketService, InMemoryShoppingBasketService>();
-builder.Services.AddHttpClient<IConcertCatalogService, ConcertCatalogService>(
+builder.Services.AddHttpClient<IEventCatalogService, EventCatalogService>(
     (provider, client) =>{
-        client.BaseAddress = new Uri(provider.GetService<IConfiguration>()?["ApiConfigs:ConcertCatalog:Uri"] ?? throw new InvalidOperationException("Missing config"));
+        client.BaseAddress = new Uri(provider.GetService<IConfiguration>()?["ApiConfigs:EventsCatalog:Uri"] ?? throw new InvalidOperationException("Missing config"));
     });
 
 builder.Services.AddHttpClient<IOrderSubmissionService, HttpOrderSubmissionService>(

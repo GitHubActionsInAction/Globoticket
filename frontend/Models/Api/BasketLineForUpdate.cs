@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace GloboTicket.Frontend.Models.Api;
-
-public class BasketLineForUpdate
+namespace GloboTicket.Frontend.Models.Api
 {
-    [Required]
-    public Guid LineId { get; set; }
-    [Required]
-    public int TicketAmount { get; set; }
+    public class BasketLineForUpdate
+    {
+        [Required]
+        public Guid LineId { get; set; }
+        [Required]
+        public int TicketAmount { get; set; }
+    }
 }

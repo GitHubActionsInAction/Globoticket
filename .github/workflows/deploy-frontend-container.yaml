@@ -66,8 +66,7 @@ jobs:
           export homepage=$(kubectl get svc frontend --namespace ${{env.namespace}} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
           echo "homepage=$homepage" >> $GITHUB_OUTPUT
 
-      - name: Install playwright 
-        run:  dotnet tool install --global Microsoft.Playwright.CLI
+
    
   verify-staging:
     runs-on: ubuntu-latest
@@ -77,8 +76,11 @@ jobs:
     steps:  
       - name: get homepage variable from previous job
         run: |
-          echo "homepage=${{needs.deploy-staging.outputs.homepage}}"
-
+          echo "homepage=http://${{needs.deploy-staging.outputs.homepage}}"
+     
+      - name: Install playwright 
+        run:  dotnet tool install --global Microsoft.Playwright.CLI
+      
       - name: Run tests
         run: |
           dotnet test Tests.Playwright/Tests.Playwright.csproj 

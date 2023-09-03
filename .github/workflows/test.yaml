@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Retrieve latest packages
         run: |
-          export frontend_version=$(gh api  /user/packages/container/frontend/versions | jq '.[0].metadata.container.tags[0]')
+          export FRONTED_VERSION=$(gh api  /user/packages/container/frontend/versions | jq '.[0].metadata.container.tags[0]')
       - name: Retrieve latest packages
         run: |
           env

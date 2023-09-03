@@ -23,9 +23,7 @@ jobs:
       - name: Get Latest Release
         id: latest_release
         run: |
-          OWNER=your-username
-          REPO=your-repo-name
-          LATEST_RELEASE=$(curl -s "https://api.github.com/repos/$OWNER/$REPO/releases/latest" | jq -r .tag_name)
+          LATEST_RELEASE=$(gh api /repos/${{github.repository}}/releases/latest --jq .tag_name)
           echo "Latest Release: $LATEST_RELEASE"
           echo "::set-output name=latest_release::$LATEST_RELEASE"
 

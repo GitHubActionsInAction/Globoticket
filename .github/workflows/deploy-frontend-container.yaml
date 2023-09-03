@@ -7,7 +7,7 @@ permissions:
 env:
   deploymentFile: 'frontend.yaml'
   namespace: 'globoticket'
-
+  GH_TOKEN: ${{ github.token }} #required for gh tool
   
 on:
   release: 

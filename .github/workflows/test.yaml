@@ -22,4 +22,4 @@ jobs:
           echo "FRONTED_VERSION=$FRONTED_VERSION" >> $GITHUB_OUTPUT
       - name: dump env
         run: |
-          env
+          echo $FRONTED_VERSION

@@ -20,14 +20,19 @@ jobs:
     environment:
       name: 'staging'
     steps:
-      - name : get version from release
-        id: getversion
-        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
+      - name: Get Latest Release
+        id: latest_release
+        run: |
+          OWNER=your-username
+          REPO=your-repo-name
+          LATEST_RELEASE=$(curl -s "https://api.github.com/repos/$OWNER/$REPO/releases/latest" | jq -r .tag_name)
+          echo "Latest Release: $LATEST_RELEASE"
+          echo "::set-output name=latest_release::$LATEST_RELEASE"
 
       - name: get release artifacts for deployment, picks data from latest release
         uses: dsaltares/fetch-gh-release-asset@master
         with:
-          version: ${{ steps.getversion.outputs.version }}
+          version: ${{ steps.latest_release.outputs.latest_release }}
           regex: true
           file: ".*"
           target: './'

@@ -23,30 +23,30 @@ jobs:
         uses: actions/checkout@v3
       - name: Retrieve latest packages
         run: |
-          export frontend-version=$(gh api /user/packages/container/frontend/versions/latest | jq -r '.id') 
-          export ordering-version=$(gh api /user/packages/container/ordering/versions/latest | jq -r '.id')
-          export catalog-version=$(gh api /user/packages/container/catalog/versions/latest | jq -r '.id')   
+          export frontend_version=$(gh api /user/packages/container/frontend/versions | jq '.[0].metadata.container.tags[0]') 
+          export ordering_version=$(gh api /user/packages/container/ordering/versions | jq '.[0].metadata.container.tags[0]')
+          export catalog_version=$(gh api /user/packages/container/catalog/versions | jq '.[0].metadata.container.tags[0]')   
       
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
         with:
           files: '["${{github.workspace}}/${{env.deploymentfileFolder}}/catalog.yaml"]'
         env: 
-          Build.version: $catalog-version
-          
+          Build.version: $catalog_version
+
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
         with:
           files: '["${{github.workspace}}/${{env.deploymentfileFolder}}/frontend.yaml"]'
         env: 
-          Build.version: $frontend-version
+          Build.version: $frontend_version
 
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
         with:
           files: '["${{github.workspace}}/${{env.deploymentfileFolder}}/ordering.yaml"]'
         env: 
-          Build.version: $ordering-version
+          Build.version: $ordering_version
 
       - name: create a relase with version provided by package push
         uses: softprops/action-gh-release@v1

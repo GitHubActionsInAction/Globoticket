@@ -1,0 +1,21 @@
+name: "chapter 09: create release"
+permissions:
+  actions: write
+  packages: write
+  contents: read
+on:
+  workflow_dispatch:
+
+env:
+  deploymentfileFolder: 'deployment-automation'
+  GH_TOKEN: ${{ github.token }} #required for gh tool
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Retrieve latest packages
+        run: |
+          gh api /user/packages/container/frontend/versions/latest

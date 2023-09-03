@@ -1,4 +1,4 @@
-name: "chapter 09: create release"
+name: "test"
 permissions:
   actions: write
   packages: write

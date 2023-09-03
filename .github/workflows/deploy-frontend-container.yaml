@@ -23,7 +23,7 @@ jobs:
       - name: Get Latest Release
         id: latest_release
         run: |
-          LATEST_RELEASE=$(gh api /repos/${{github.repository}}/releases/latest --jq .tag_name)
+          LATEST_RELEASE=$(gh api /repos/${{github.repository}}/releases/latest --jq .id)
           echo "Latest Release: $LATEST_RELEASE"
           echo "::set-output name=latest_release::$LATEST_RELEASE"
 

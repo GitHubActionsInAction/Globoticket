@@ -63,7 +63,7 @@ jobs:
    
       - name: set homepage from deployment
         run: |
-          export homepage=$(kubectl get svc frontend --namespace ${{env.namespace}}-o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          export homepage=$(kubectl get svc frontend --namespace ${{env.namespace}} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
           echo "homepage=$homepage" >> $GITHUB_ENV
 
       - name: Run tests

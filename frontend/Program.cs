@@ -20,7 +20,7 @@ builder.Services.AddHttpClient<IOrderSubmissionService, HttpOrderSubmissionServi
 {
     c.BaseAddress = new Uri(sp.GetService<IConfiguration>()["ApiConfigs:Ordering:Uri"]);
 });
-
+ 
 builder.Services.AddSingleton<IShoppingBasketService, InMemoryShoppingBasketService>();
 
 builder.Services.AddSingleton<Settings>();

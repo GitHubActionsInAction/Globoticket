@@ -1,11 +1,11 @@
-name: "chapter 09: deploy-frontend-container"
+name: "chapter 09: deploy-ordering-container"
 permissions:
   actions: write
   packages: write
   contents: read
 
 env:
-  deploymentFile: 'frontend.yaml'
+  deploymentFile: 'ordering.yaml'
   namespace: 'globoticket'
   GH_TOKEN: ${{ github.token }} #required for gh tool
   
@@ -58,21 +58,6 @@ jobs:
           manifests: |
              ./${{env.deploymentFile}}
       
-      - name: Install playwright 
-        run:  dotnet tool install --global Microsoft.Playwright.CLI
-   
-      - name: set homepage from deployment
-        run: |
-          export homepage=$(kubectl get svc frontend --namespace ${{env.namespace}}-o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-          echo "homepage=$homepage" >> $GITHUB_ENV
-
-      - name: Run tests
-        run: |
-          dotnet test Tests.Playwright/Tests.Playwright.csproj 
-                      --logger "liquid.md;logfilename=testResults.md"
-      - name: Output the results to the actions jobsummary
-        if: always()
-        run: cat $(find . -name testResults.md) >> $GITHUB_STEP_SUMMARY
            
   deploy-production:
     runs-on: ubuntu-latest
@@ -83,9 +68,9 @@ jobs:
       - name: Get Latest Release
         id: latest_release
         run: |
-          LATEST_RELEASE=$(gh api /repos/${{github.repository}}/releases/latest --jq .id)
-          echo "Latest Release: $LATEST_RELEASE"
-          echo "::set-output name=latest_release::$LATEST_RELEASE"
+            LATEST_RELEASE=$(gh api /repos/${{github.repository}}/releases/latest --jq .id)
+            echo "Latest Release: $LATEST_RELEASE"
+            echo "::set-output name=latest_release::$LATEST_RELEASE"
 
       - name: get release artifacts for deployment, picks data from latest release
         uses: dsaltares/fetch-gh-release-asset@master

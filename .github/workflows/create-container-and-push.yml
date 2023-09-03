@@ -69,7 +69,13 @@ jobs:
       - name: select docker driver
         run: |
           docker buildx create --use --driver=docker-container
-       
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: actions-with-actions/globoticket 
+
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
@@ -79,6 +85,7 @@ jobs:
             tags: ${{inputs.containerRegistry}}/${{inputs.imageRepository}}:${{env.GitVersion_SemVer}}
             cache-from: type=gha
             cache-to: type=gha,mode=max
+            labels: ${{steps.meta.outputs.labels}}
      
 
 

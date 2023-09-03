@@ -31,7 +31,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI", "CI", "{26E9DCEF-611E-
 		.github\workflows\create-container-and-push-frontend.yml = .github\workflows\create-container-and-push-frontend.yml
 		.github\workflows\compile-and-test-fast-feedback.yml = .github\workflows\compile-and-test-fast-feedback.yml
 		.github\workflows\create-container-and-push.yml = .github\workflows\create-container-and-push.yml
+		.github\workflows\create-release-catalog.yml = .github\workflows\create-release-catalog.yml
 		.github\workflows\create-release-frontend.yaml = .github\workflows\create-release-frontend.yaml
+		.github\workflows\create-release-ordering.yml = .github\workflows\create-release-ordering.yml
+		.github\workflows\create-release.yml = .github\workflows\create-release.yml
 		.github\workflows\security-testing.yaml = .github\workflows\security-testing.yaml
 	EndProjectSection
 EndProject

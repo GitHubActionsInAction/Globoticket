@@ -16,6 +16,7 @@ public class EventRepository : IEventRepository
     {
         var johnEgbertGuid = Guid.Parse("{CFB88E29-4744-48C0-94FA-B25B92DEA317}");
         var nickSailorGuid = Guid.Parse("{CFB88E29-4744-48C0-94FA-B25B92DEA318}");
+        var nickAndSimon = Guid.Parse("{AC2CBA54-8462-452B-88B4-00D8C0F36BA9}");
         var michaelJohnsonGuid = Guid.Parse("{CFB88E29-4744-48C0-94FA-B25B92DEA319}");
 
         events.Add(new Event
@@ -50,6 +51,17 @@ public class EventRepository : IEventRepository
             Description = "The critics are over the moon and so will you after you've watched this sing and dance extravaganza written by Nick Sailor, the man from 'My dad and sister'.",
             ImageUrl = "/img/musical.jpg",
         });
+        events.Add(new Event
+        {
+            EventId = nickSailorGuid,
+            Name = "Nick & Simon",
+            Price = 57,
+            Artist = "Nick Schilder",
+            Date = DateTime.Now.AddMonths(6),
+            Description = "Dutch folclore music",
+            ImageUrl = "/img/banjo.jpg",
+        });
+
     }
 
     public Task<IEnumerable<Event>> GetEvents()

@@ -34,7 +34,6 @@ builder.Services.AddHttpClient(Options.DefaultName)
 
 builder.Services.AddSingleton<Settings>();
 builder.Services.AddApplicationInsightsTelemetry();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

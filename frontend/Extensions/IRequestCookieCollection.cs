@@ -1,12 +1,15 @@
-﻿using GloboTicket.Frontend.Models;
+﻿using System;
+using GloboTicket.Frontend.Models;
+using Microsoft.AspNetCore.Http;
 
-namespace GloboTicket.Frontend.Extensions;
-
-public static class RequestCookieCollection
+namespace GloboTicket.Frontend.Extensions
 {
-    public static Guid GetCurrentBasketId(this IRequestCookieCollection cookies, Settings settings)
+    public static  class RequestCookieCollection
     {
-        Guid.TryParse(cookies[settings.BasketIdCookieName], out Guid basketId);
-        return basketId;
+        public static Guid GetCurrentBasketId(this IRequestCookieCollection cookies, Settings settings)
+        {
+            Guid.TryParse(cookies[settings.BasketIdCookieName], out Guid basketId);
+            return basketId;
+        }
     }
 }

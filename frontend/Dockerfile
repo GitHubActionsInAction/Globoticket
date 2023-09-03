@@ -14,10 +14,9 @@ WORKDIR "/src/frontend"
 RUN dotnet build "frontend.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "frontend.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "frontend.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-LABEL org.opencontainers.image.source https://github.com/vriesmarcel/github-actions-in-action
 ENTRYPOINT ["dotnet", "frontend.dll"]

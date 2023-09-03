@@ -1,8 +1,9 @@
 ﻿using GloboTicket.Frontend.Models.View;
 
-namespace GloboTicket.Frontend.Services.Ordering;
-
-public interface IOrderSubmissionService
+namespace GloboTicket.Frontend.Services.Ordering
 {
-    Task<Guid> SubmitOrder(CheckoutViewModel checkoutViewModel);
+    public interface IOrderSubmissionService
+    {
+        Task<Guid> SubmitOrder(CheckoutViewModel checkoutViewModel);
+    }
 }

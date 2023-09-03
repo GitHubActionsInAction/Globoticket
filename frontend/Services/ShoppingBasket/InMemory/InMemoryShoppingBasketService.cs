@@ -1,85 +1,95 @@
-﻿using GloboTicket.Frontend.Models;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using GloboTicket.Frontend.Extensions;
+using GloboTicket.Frontend.Models;
 using GloboTicket.Frontend.Models.Api;
 
-#pragma warning disable 1998
-
-namespace GloboTicket.Frontend.Services.ShoppingBasket;
-
-// In memory implementation for demo purposes only
-public class InMemoryShoppingBasketService : IShoppingBasketService
+namespace GloboTicket.Frontend.Services
 {
-    private readonly Dictionary<Guid, InMemoryBasket> baskets;
-    private readonly Dictionary<Guid, Concert> concertsCache; // shopping basket lines need to get concert date and name
-    private readonly Settings settings;
-    private readonly IConcertCatalogService concertCatalogService;
-
-    public InMemoryShoppingBasketService(Settings settings, IConcertCatalogService concertCatalogService)
+    // In memory implementation
+    public class InMemoryShoppingBasketService: IShoppingBasketService
     {
-        this.settings = settings;
-        this.concertCatalogService = concertCatalogService;
-        this.baskets = new Dictionary<Guid, InMemoryBasket>();
-        this.concertsCache = new Dictionary<Guid, Concert>();
-    }
+        private readonly Dictionary<Guid, InMemoryBasket> baskets;
+        private readonly Dictionary<Guid, Event> eventsCache; // shopping basket lines need to get event date and name
+        private readonly Settings settings;
+        private readonly IEventCatalogService eventCatalogService;
 
-    public async Task<BasketLine> AddToBasket(Guid basketId, BasketLineForCreation basketLine)
-    {
-        if (!baskets.TryGetValue(basketId, out var basket))
+        public InMemoryShoppingBasketService(Settings settings, IEventCatalogService eventCatalogService)
         {
-            basket = new InMemoryBasket(settings.UserId);
-            baskets.Add(basket.BasketId, basket);
-        }
-        if (!concertsCache.TryGetValue(basketLine.ConcertId, out var concert))
-        {
-            concert = await concertCatalogService.GetConcert(basketLine.ConcertId);
-            concertsCache.Add(basketLine.ConcertId, concert);
+            this.settings = settings;
+            this.eventCatalogService = eventCatalogService;
+            this.baskets = new Dictionary<Guid, InMemoryBasket>();
+            this.eventsCache = new Dictionary<Guid, Event>();
         }
 
-        return basket.Add(basketLine, concert);
-    }
-
-    public async Task<Basket> GetBasket(Guid basketId)
-    {
-        baskets.TryGetValue(basketId, out var basket);
-        return new Basket()
+        public async Task<BasketLine> AddToBasket(Guid basketId, BasketLineForCreation basketLine)
         {
-            BasketId = basketId,
-            NumberOfItems = basket?.Lines?.Count ?? 0,
-            UserId = basket?.UserId ?? Guid.Empty
-        };
+            if (!baskets.TryGetValue(basketId, out var basket))
+            {
+                basket = new InMemoryBasket(settings.UserId);
+                baskets.Add(basket.BasketId, basket);
+            }
+            if (!eventsCache.TryGetValue(basketLine.EventId, out var @event))
+            {
+                @event = await eventCatalogService.GetEvent(basketLine.EventId);
+                eventsCache.Add(basketLine.EventId, @event);
+            }
 
-    }
-
-    public async Task<IEnumerable<BasketLine>> GetLinesForBasket(Guid basketId)
-    {
-        if (!baskets.TryGetValue(basketId, out var basket))
-        {
-            return new BasketLine[0];
+            return basket.Add(basketLine, @event);
         }
-        return basket.Lines;
-    }
 
-    public async Task UpdateLine(Guid basketId, BasketLineForUpdate basketLineForUpdate)
-    {
-        if (baskets.TryGetValue(basketId, out var basket))
+        public Task<Basket> GetBasket(Guid basketId)
         {
-            basket.Update(basketLineForUpdate);
-        }
-    }
+            if (!baskets.TryGetValue(basketId, out var basket))
+            {
+                return Task.FromResult<Basket>(null);
+            }
+            return Task.FromResult(new Basket()
+            {
+                BasketId = basketId,
+                NumberOfItems = basket.Lines.Sum(l=> l.TicketAmount),
+                UserId = basket.UserId
+            });
 
-    public async Task RemoveLine(Guid basketId, Guid lineId)
-    {
-        if (baskets.TryGetValue(basketId, out var basket))
-        {
-            basket.Remove(lineId);
         }
-    }
 
-    public Task ClearBasket(Guid basketId)
-    {
-        if (baskets.TryGetValue(basketId, out var basket))
+        public Task<IEnumerable<BasketLine>> GetLinesForBasket(Guid basketId)
         {
-            basket.Clear();
+            if (!baskets.TryGetValue(basketId, out var basket))
+            {
+                return Task.FromResult<IEnumerable<BasketLine>>(new BasketLine[0]);
+            }
+            return Task.FromResult < IEnumerable < BasketLine >> (basket.Lines);
         }
-        return Task.CompletedTask;
+
+        public Task UpdateLine(Guid basketId, BasketLineForUpdate basketLineForUpdate)
+        {
+            if (baskets.TryGetValue(basketId, out var basket))
+            {
+                basket.Update(basketLineForUpdate);
+            }
+            return Task.CompletedTask;
+        }
+
+        public Task RemoveLine(Guid basketId, Guid lineId)
+        {
+            if (baskets.TryGetValue(basketId, out var basket))
+            {
+                basket.Remove(lineId);
+            }
+            return Task.CompletedTask;
+        }
+
+        public Task ClearBasket(Guid basketId)
+        {
+            if (baskets.TryGetValue(basketId, out var basket))
+            {
+                basket.Clear();
+            }
+            return Task.CompletedTask;
+        }
     }
 }

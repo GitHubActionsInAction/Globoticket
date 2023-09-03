@@ -1,9 +1,14 @@
-﻿namespace GloboTicket.Frontend.Extensions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-public static class EnumerableOfGuid
+namespace GloboTicket.Frontend.Extensions
 {
-    public static string ToQueryString(this IEnumerable<Guid> guids)
+    public static class EnumerableOfGuid
     {
-        return "?" + string.Join("&", guids.Select(g => $"concertIds={g}"));
+        public static string ToQueryString(this IEnumerable<Guid> guids)
+        {
+            return "?" + string.Join("&", guids.Select(g => $"eventIds={g}"));
+        }
     }
 }

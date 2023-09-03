@@ -1,46 +1,46 @@
 ﻿using GloboTicket.Frontend.Models.Api;
 
-namespace GloboTicket.Frontend.Services.ShoppingBasket;
-
-class InMemoryBasket
+namespace GloboTicket.Frontend.Services
 {
-    public InMemoryBasket(Guid userId)
+    class InMemoryBasket
     {
-        BasketId = Guid.NewGuid();
-        Lines = new List<BasketLine>();
-        UserId = userId;
-    }
-    public Guid BasketId { get; }
-    public List<BasketLine> Lines { get; }
-    public Guid UserId { get; }
-
-    public BasketLine Add(BasketLineForCreation line, Concert concert)
-    {
-        var basketLine = new BasketLine()
+        public InMemoryBasket(Guid userId)
         {
-            ConcertId = line.ConcertId,
-            TicketAmount = line.TicketAmount,
-            Concert = concert,
-            BasketId = this.BasketId,
-            BasketLineId = Guid.NewGuid(),
-            Price = line.Price
-        };
-        Lines.Add(basketLine);
-        return basketLine;
-    }
-    public void Remove(Guid lineId)
-    {
-        var index = Lines.FindIndex(bl => bl.BasketLineId == lineId);
-        if (index >= 0) Lines.RemoveAt(index);
-    }
+            BasketId = Guid.NewGuid();
+            Lines = new List<BasketLine>();
+            UserId = userId;
+        }
+        public Guid BasketId { get; }
+        public List<BasketLine> Lines { get; }
+        public Guid UserId { get;  }
 
-    public void Update(BasketLineForUpdate basketLineForUpdate)
-    {
-        var index = Lines.FindIndex(bl => bl.BasketLineId == basketLineForUpdate.LineId);
-        Lines[index].TicketAmount = basketLineForUpdate.TicketAmount;
-    }
-    public void Clear()
-    {
-        Lines.Clear();
+        public BasketLine Add(BasketLineForCreation line, Event @event)
+        {
+            var basketLine = new BasketLine() { 
+                EventId = line.EventId, 
+                TicketAmount = line.TicketAmount,
+                Event = @event,
+                BasketId = this.BasketId, 
+                BasketLineId = Guid.NewGuid(), 
+                Price = line.Price 
+            };
+            Lines.Add(basketLine);
+            return basketLine;
+        }
+        public void Remove(Guid lineId)
+        {
+            var index = Lines.FindIndex(bl => bl.BasketLineId == lineId);
+            if (index >= 0) Lines.RemoveAt(index);
+        }
+
+        public void Update(BasketLineForUpdate basketLineForUpdate)
+        {
+            var index = Lines.FindIndex(bl => bl.BasketLineId == basketLineForUpdate.LineId);
+            Lines[index].TicketAmount = basketLineForUpdate.TicketAmount;
+        }
+        public void Clear()
+        {
+            Lines.Clear();
+        }
     }
 }

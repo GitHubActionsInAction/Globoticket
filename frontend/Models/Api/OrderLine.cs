@@ -2,7 +2,7 @@
 
 public class OrderLine
 {
-    public Guid ConcertId { get; set; }
+    public Guid EventId { get; set; }
     public int TicketCount { get; set; }
     public int Price { get; set; }
 

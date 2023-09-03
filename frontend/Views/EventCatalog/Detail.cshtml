@@ -1,7 +1,7 @@
-﻿@model GloboTicket.Frontend.Models.Api.Concert
+﻿@model GloboTicket.Frontend.Models.Api.Event
 <div class="row mt-5">
     <div class="col-md-4">
-        <img src="@Model!.ImageUrl" class="detailImage" alt="Artist pic" />
+        <img src="@Model.ImageUrl" class="detailImage" alt="Artist pic" />
     </div>
     <div class="col-md-6 ml-1">
         <div class="row">
@@ -41,7 +41,7 @@
                     <option value="4">4</option>
                     <option value="5">5</option>
                 </select>
-                <input asp-for="ConcertId" type="hidden" />
+                <input asp-for="EventId" type="hidden" />
                 <input asp-for="Price" type="hidden" />
                 <button type="submit" class="btn btn-primary ml-4 w-50">PLACE ORDER</button>
             </div>

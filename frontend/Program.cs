@@ -1,24 +1,36 @@
 using GloboTicket.Frontend.Services;
 using GloboTicket.Frontend.Models;
 using GloboTicket.Frontend.Services.Ordering;
-using GloboTicket.Frontend.Services.ShoppingBasket;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Prometheus;
+using HealthChecks.UI.Client;
+using GloboTicket.Frontend.HealthChecks;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<IShoppingBasketService, InMemoryShoppingBasketService>();
-builder.Services.AddHttpClient<IConcertCatalogService, ConcertCatalogService>(
-    (provider, client) =>{
-        client.BaseAddress = new Uri(provider.GetService<IConfiguration>()?["ApiConfigs:ConcertCatalog:Uri"] ?? throw new InvalidOperationException("Missing config"));
-    });
+// note: for this demo we're using the DAPR_HTTP_PORT environment variable to decide if we're using Dapr or not
+builder.Services.AddHttpClient<IEventCatalogService, EventCatalogService>((sp, c) =>
+{
+    c.BaseAddress = new Uri(sp.GetService<IConfiguration>()["ApiConfigs:EventCatalog:Uri"]);
+});
+builder.Services.AddHttpClient<IOrderSubmissionService, HttpOrderSubmissionService>((sp, c) =>
+{
+    c.BaseAddress = new Uri(sp.GetService<IConfiguration>()["ApiConfigs:Ordering:Uri"]);
+});
 
-builder.Services.AddHttpClient<IOrderSubmissionService, HttpOrderSubmissionService>(
-    (provider, client) => {
-        client.BaseAddress = new Uri(provider.GetService<IConfiguration>()?["ApiConfigs:Ordering:Uri"] ?? throw new InvalidOperationException("Missing config"));
-    });
+builder.Services.AddSingleton<IShoppingBasketService, InMemoryShoppingBasketService>();
+builder.Services.AddSingleton<Settings>();
+
+builder.Services.AddHealthChecks()
+   .AddCheck<SlowDependencyHealthCheck>("SlowDependencyDemo", tags: new string[] { "ready" })
+   .AddProcessAllocatedMemoryHealthCheck(maximumMegabytesAllocated: 500);
+
+builder.Services.AddHttpClient(Options.DefaultName)
+    .UseHttpClientMetrics();
 
 builder.Services.AddSingleton<Settings>();
 builder.Services.AddApplicationInsightsTelemetry();
@@ -36,10 +48,35 @@ if (!app.Environment.IsDevelopment())
 // Turning this off to simplify the running in Kubernetes demo
 // app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
+
 app.UseAuthorization();
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=ConcertCatalog}/{action=Index}/{id?}");
+    pattern: "{controller=EventCatalog}/{action=Index}/{id?}");
+
+
+//map the livelyness and readyness probes
+app.MapHealthChecks("/health/ready",
+new HealthCheckOptions()
+{
+    Predicate = reg => reg.Tags.Contains("ready"),
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+
+app.MapHealthChecks("/health/lively",
+new HealthCheckOptions()
+{
+    Predicate = reg => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+
+app.UseHttpMetrics();
+app.UseMetricServer();
+
+app.UseEndpoints(endpoints =>
+endpoints.MapMetrics());
 
 app.Run();

@@ -1,7 +1,10 @@
-﻿namespace GloboTicket.Frontend.Models;
+﻿using System;
 
-public class Settings
+namespace GloboTicket.Frontend.Models
 {
-    public string BasketIdCookieName => "BasketId";
-    public Guid UserId => Guid.Parse("{E455A3DF-7FA5-47E0-8435-179B300D531F}");
+    public class Settings
+    {
+        public string BasketIdCookieName => "BasketId";
+        public  Guid UserId => Guid.Parse("{E455A3DF-7FA5-47E0-8435-179B300D531F}");
+    }
 }

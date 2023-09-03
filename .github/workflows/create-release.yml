@@ -9,6 +9,7 @@ on:
 
 env:
   deploymentfileFolder: 'deployment-automation'
+  GH_TOKEN: ${{ github.token }} #required for gh tool
 
 jobs:
   release:
@@ -20,13 +21,32 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
- 
+      - name: Retrieve latest packages
+        run: |
+          export frontend-version=$(gh api /user/packages/container/frontend/versions/latest | jq -r '.id') 
+          export ordering-version=$(gh api /user/packages/container/ordering/versions/latest | jq -r '.id')
+          export catalog-version=$(gh api /user/packages/container/catalog/versions/latest | jq -r '.id')   
+      
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
         with:
-          files: '["${{github.workspace}}/${{env.deploymentfileFolder}}/frontend.yaml","${{github.workspace}}/${{env.deploymentfileFolder}}/ordering.yaml","${{github.workspace}}/${{env.deploymentfileFolder}}/catalog.yaml"]'
+          files: '["${{github.workspace}}/${{env.deploymentfileFolder}}/catalog.yaml"]'
         env: 
-          Build.version: ${{github.event.registry_package.package_version.container_metadata.tag.name}}
+          Build.version: $catalog-version
+          
+      - name: Replace tokens
+        uses: cschleiden/replace-tokens@v1.0
+        with:
+          files: '["${{github.workspace}}/${{env.deploymentfileFolder}}/frontend.yaml"]'
+        env: 
+          Build.version: $frontend-version
+
+      - name: Replace tokens
+        uses: cschleiden/replace-tokens@v1.0
+        with:
+          files: '["${{github.workspace}}/${{env.deploymentfileFolder}}/ordering.yaml"]'
+        env: 
+          Build.version: $ordering-version
 
       - name: create a relase with version provided by package push
         uses: softprops/action-gh-release@v1

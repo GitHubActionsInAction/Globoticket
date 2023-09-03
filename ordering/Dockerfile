@@ -18,4 +18,5 @@ RUN dotnet publish "ordering.csproj" -c Release -o /app/publish /p:UseAppHost=fa
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+LABEL org.opencontainers.image.source https://github.com/vriesmarcel/github-actions-in-action
 ENTRYPOINT ["dotnet", "ordering.dll"]

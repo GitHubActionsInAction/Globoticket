@@ -18,4 +18,5 @@ RUN dotnet publish "catalog.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+LABEL org.opencontainers.image.source https://github.com/vriesmarcel/github-actions-in-action
 ENTRYPOINT ["dotnet", "catalog.dll"]

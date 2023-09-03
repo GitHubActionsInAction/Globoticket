@@ -1,5 +1,4 @@
 using Microsoft.Playwright;
-using Tests.Playwright.Gerkin;
 using Tests.Playwright.PageObjects;
 using static System.Net.WebRequestMethods;
 
@@ -9,11 +8,11 @@ namespace Tests.Playwright
     public class SimpleTests
     {
         public TestContext? TestContext;
-        public string StartPage = "https://globoticket.azurewebsites.net";
+        public string StartPage = "http://4.175.1.56";
         [TestInitialize]
         public void Initialize()
         {
-            var homepage = System.Environment.GetEnvironmentVariable("HomePage");
+            var homepage = System.Environment.GetEnvironmentVariable("homepage");
             if(!string.IsNullOrWhiteSpace(homepage))
                 StartPage = homepage.Trim();
 
@@ -25,56 +24,10 @@ namespace Tests.Playwright
             }
         }
 
-
-
-
         [TestMethod]
-        public async Task SimpleTest_demo02()
+        public void SimpleTest()
         {
-            var homepageUrl = "http://localhost:5266/";
-
-            var playwright = await Microsoft.Playwright.Playwright.CreateAsync();
-            var browser = await playwright.Chromium.LaunchAsync(new()
-            {
-                Headless = false
-            });
-            // Act
-
-            var webSite = new WebSite(browser, homepageUrl);
-            await webSite.NavigateToHomepage();
-            await webSite.AddItemToBasket("John Egbert");
-            await webSite.CheckOut();
-            await webSite.ConfirmPurchase();
-            // Assert 
-            Assert.IsTrue(await webSite.IsPurchaseConfirmed());
-
-
-
-        }
-
-
-        [TestMethod]
-        public void SimpleTest_demo03()
-        {
-            var Given = new Given(new GloboticketDriver());
-            var When = new When(new GloboticketDriver());
-            var Then = new Then(new GloboticketDriver());
-
-            Given.IHaveACleanDatabaseWithProducts()
-                 .And()
-                 .GloboticketWebsiteIsAvailable();
-
-            When.IAddTheProductToTheShoppingCart("John Egbert")
-                .And()
-                .IAddTheProductToTheShoppingCart("John Egbert");
-
-            Then.TheShoppingCartContainsNumberOfItems(2);
-        }
-
-        [TestMethod]
-        public async Task SimpleTest()
-        {
-            var BuyticketResult = HomePage.GetHomePage(StartPage,false)
+            var BuyticketResult = HomePage.GetHomePage(StartPage)
                 .SelectTicket("John Egbert")
                 .BuyTicket()
                 .Checkout(new CustomerNico())

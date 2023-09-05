@@ -35,21 +35,21 @@ jobs:
         with:
           files: '["${{github.workspace}}/${{env.deploymentfileFolder}}/catalog.yaml"]'
         env: 
-          Build.version: $CATALOG_VERSION
+          Build.version: ${{env.CATALOG_VERSION}}
 
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
         with:
           files: '["${{github.workspace}}/${{env.deploymentfileFolder}}/frontend.yaml"]'
         env: 
-          Build.version: $FRONTED_VERSION
+          Build.version: ${{env.FRONTED_VERSION}}
 
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
         with:
           files: '["${{github.workspace}}/${{env.deploymentfileFolder}}/ordering.yaml"]'
         env: 
-          Build.version: $ORDERING_VERSION
+          Build.version: ${{env.ORDERING_VERSION}}
 
       - name: create a relase with version provided by package push
         uses: softprops/action-gh-release@v1

@@ -31,7 +31,7 @@ builder.Services.AddHealthChecks()
 
 builder.Services.AddHttpClient(Options.DefaultName)
     .UseHttpClientMetrics();
-
+     
 builder.Services.AddSingleton<Settings>();
 builder.Services.AddApplicationInsightsTelemetry();
 var app = builder.Build();

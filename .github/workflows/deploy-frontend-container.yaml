@@ -74,6 +74,8 @@ jobs:
     environment:
       name: 'staging'
     steps:  
+      - uses: actions/checkout@v3
+      
       - name: get homepage variable from previous job
         run: |
           echo "homepage=http://${{needs.deploy-staging.outputs.homepage}}"
@@ -83,7 +85,7 @@ jobs:
       
       - name: Run tests
         run: |
-          dotnet test Tests.Playwright/Tests.Playwright.csproj 
+          dotnet test End2EndTests/End2EndTests.csproj
                       --logger "liquid.md;logfilename=testResults.md"
       - name: Output the results to the actions jobsummary
         if: always()

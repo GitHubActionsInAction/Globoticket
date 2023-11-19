@@ -2,7 +2,7 @@ name: "chapter 08: Security Testing"
  
 env:
   imageRepository: 'frontend'
-  containerRegistry: 'ghcr.io/GitHubActionsInAction'
+  containerRegistry: 'ghcr.io/githubactionsinaction'
   dockerfilePath: 'frontend/Dockerfile'
 
 on:

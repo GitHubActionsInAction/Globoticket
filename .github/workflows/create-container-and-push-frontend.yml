@@ -16,7 +16,7 @@ jobs:
     uses: ./.github/workflows/create-container-and-push.yml
     with:
       imageRepository: 'frontend'
-      containerRegistry: 'ghcr.io/vriesmarcel'
+      containerRegistry: 'ghcr.io/GitHubActionsInAction'
       dockerfilePath: 'frontend/Dockerfile'
       namespace: 'globoticket'
     secrets:

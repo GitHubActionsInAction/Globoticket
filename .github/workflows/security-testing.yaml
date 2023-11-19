@@ -2,7 +2,7 @@ name: "chapter 08: Security Testing"
  
 env:
   imageRepository: 'frontend'
-  containerRegistry: 'ghcr.io/xpiritcommunityevents'
+  containerRegistry: 'ghcr.io/GitHubActionsInAction'
   dockerfilePath: 'frontend/Dockerfile'
 
 on:
@@ -64,7 +64,7 @@ jobs:
         uses: gittools/actions/gitversion/execute@v0.9.7 
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@v0.14.0
         with:
           image-ref: ${{env.containerRegistry}}/${{env.imageRepository}}:${{env.GitVersion_SemVer}}
           format: 'sarif'

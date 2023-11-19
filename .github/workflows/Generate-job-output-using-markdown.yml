@@ -1,0 +1,19 @@
+name: "Chapter 8: Generate job output using markdown"
+on:
+  workflow_dispatch: 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Generate markdown
+        run: |
+          echo "## Test results" >> >> "$GITHUB_STEP_SUMMARY"
+          echo "| **Test Name** | **Result**|" >> >> "$GITHUB_STEP_SUMMARY"
+          echo "|--|--|" >> >> "$GITHUB_STEP_SUMMARY"
+          echo "| validate numbers are > 0 |:white_check_mark: |" >> >> "$GITHUB_STEP_SUMMARY"
+          echo "| validate numbers are < 10 |:white_check_mark: |" >> >> "$GITHUB_STEP_SUMMARY"
+          echo "| validate numbers are odd |:x: |" >> >> "$GITHUB_STEP_SUMMARY"
+          echo "| validate numbers are even|:white_check_mark: |" >> >> "$GITHUB_STEP_SUMMARY"
+

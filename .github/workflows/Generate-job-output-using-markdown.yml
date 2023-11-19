@@ -1,4 +1,4 @@
-name: "Chapter 8: Generate job output using markdown"
+name: "chapter 08: Generate job output using markdown"
 on:
   workflow_dispatch: 
 jobs:

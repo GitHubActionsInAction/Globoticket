@@ -11,7 +11,7 @@ jobs:
         run: |
           echo "## Test results" >> "$GITHUB_STEP_SUMMARY"
           echo "| **Test Name** | **Result**|" >> "$GITHUB_STEP_SUMMARY"
-          echo "|--|--|" >> >> "$GITHUB_STEP_SUMMARY"
+          echo "|--|--|" >> "$GITHUB_STEP_SUMMARY"
           echo "| validate numbers are > 0 |:white_check_mark: |" >> "$GITHUB_STEP_SUMMARY"
           echo "| validate numbers are < 10 |:white_check_mark: |" >> "$GITHUB_STEP_SUMMARY"
           echo "| validate numbers are odd |:x: |" >> "$GITHUB_STEP_SUMMARY"

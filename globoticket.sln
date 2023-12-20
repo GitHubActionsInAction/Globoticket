@@ -46,9 +46,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CD", "CD", "{220DA71A-7173-
 		.github\workflows\red-green-deployment.yml = .github\workflows\red-green-deployment.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "End2EndTests", "..\..\costco\dapr-big-picture\End2EndTests\End2EndTests.csproj", "{C93E96BE-1F09-4F09-91BA-A43C4501ADB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "End2EndTests", "End2EndTests\End2EndTests.csproj", "{C93E96BE-1F09-4F09-91BA-A43C4501ADB6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Playwright", "..\..\costco\dapr-big-picture\Tests.Playwright\Tests.Playwright.csproj", "{06364BB1-94AF-4F8B-875B-E8F09D6C16B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Playwright", "Tests.Playwright\Tests.Playwright.csproj", "{06364BB1-94AF-4F8B-875B-E8F09D6C16B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

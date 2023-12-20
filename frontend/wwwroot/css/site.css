@@ -1,11 +1,5 @@
 ﻿@font-face {
-    font-family: 'opensans-regular';
-    src: url('../fonts/OpenSans-Regular.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'opensans-bold';
-    src: url('../fonts/OpenSans-Bold.ttf') format('truetype');
+    font-family: 'Roboto';
 }
 
 a {
@@ -17,7 +11,7 @@ a {
     background-color: #51b5b1;
     padding: 10px 25px 10px 25px;
     font-size: 0.9em;
-    font-family: opensans-bold;
+    font-family: Roboto;
 }
 
 .filterButton {
@@ -41,15 +35,15 @@ a {
 
 select {
     height: 40px;
-    font-family: opensans-bold;
+    font-family: Roboto;
     padding-left: 14px;
     padding-right: 4px;
     margin-right: 20px;
 }
 
 body {
-    font-family: opensans-regular;
-    background-color: aqua;
+    font-family: Roboto;
+    background-color: purple;
 }
 
 html {
@@ -76,7 +70,7 @@ html {
 }
 
 .bold {
-    font-family: opensans-bold;
+    font-family: Roboto;
 }
 
 .tickets {

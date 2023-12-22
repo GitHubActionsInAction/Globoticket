@@ -85,7 +85,7 @@ jobs:
       
       - name: Run tests
         run: |
-          dotnet test End2EndTests/End2EndTests.csproj
+          dotnet test Tests.Playwright/Tests.Playwright.csproj
                       --logger "liquid.md;logfilename=testResults.md"
       - name: Output the results to the actions jobsummary
         if: always()

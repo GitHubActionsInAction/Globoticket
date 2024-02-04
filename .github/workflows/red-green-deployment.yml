@@ -164,5 +164,3 @@ jobs:
         with:
           inlineScript: |
            az webapp deployment slot delete --name ${{env.appname}} --resource-group ${{env.resourcegroup}} --slot ${{env.slotname}}
-        with:
-          inlinescript: 'az webapp deployment slot delete --name ${{env.appname}} --resource-group ${{env.resourcegroup}} --slot ${{env.slotname}}'

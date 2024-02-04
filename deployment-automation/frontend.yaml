@@ -1,10 +1,14 @@
 apiVersion: apps/v1
+# Kubernetes deployment specification. We want to deploy our container frontend
+# to the cluster, in the namespace globoticket.
 kind: Deployment
 metadata:
   name: frontend
   namespace: globoticket
   labels:
     app: frontend
+# We want to deploy 3 replicas of the frontend and deploy
+# them with a rolling update strategy
 spec:
   replicas: 3
   strategy:
@@ -19,6 +23,10 @@ spec:
     metadata:
       labels:
         app: frontend
+ # here is the specification of the container we want to deploy
+ # we set the resource limits and requests according to best practices
+ # we pull the image from github container registry, using the secrets
+ # defined in the pullsecret
     spec:
       containers:
       - name: frontend

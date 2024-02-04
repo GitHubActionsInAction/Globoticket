@@ -4,6 +4,7 @@ permissions:
   packages: write
   contents: read
 on:
+  #define the input parameters for this workflow used in the workflow call
   workflow_call:
     inputs:
       imageRepository:
@@ -21,7 +22,7 @@ on:
     secrets:
       registryPassword:
         required: true
-
+  # the input parameters are also defined for a manual trigger
   workflow_dispatch:
     inputs:
       imageRepository:
@@ -42,7 +43,7 @@ on:
         default: 'globoticket'
 jobs:
   build:
-      
+    # we check out the sources, determine the version number and login to the container registry  
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -65,17 +66,17 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.registryPassword }}
-    
+      # we use docker buildx to create a builder instance and then build and push the image
       - name: select docker driver
         run: |
           docker buildx create --use --driver=docker-container
-
+      # we use this action to determine the labels for the image
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
         with:
           images: actions-with-actions/globoticket 
-
+      # build and push the image to the container registry
       - name: Build and push
         uses: docker/build-push-action@v4
         with:

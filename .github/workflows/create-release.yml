@@ -9,8 +9,12 @@ on:
 
 env:
   deploymentfileFolder: 'deployment-automation'
-  GH_TOKEN: ${{ github.token }} #required for gh tool
-
+  GH_TOKEN: ${{ secrets.EXTENDED_ACCESSTOKEN  }} #required for gh tool
+# only run this workflow when a package is published with a tag
+# that is not empty. We cancel any other releases that are in progress
+# before we create the GH Release, we need the latest version of the images
+# we use these to patch the deployment files with the correct versions
+# and then create a release with the version provided by the package push
 jobs:
   release:
     if: github.event.registry_package.package_version.container_metadata.tag.name != ''
@@ -21,15 +25,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Retrieve latest packages
+      # get the versions of the images from the package registry
+      - name: Retrieve latest image version frontend 
         run: |
-          export FRONTED_VERSION=$(gh api /user/packages/container/frontend/versions | jq -r '.[0].metadata.container.tags[0]') 
+          export FRONTED_VERSION=$(gh api user/packages/container/frontend/versions | jq -r '.[0].metadata.container.tags[0]') 
           echo "FRONTED_VERSION=$FRONTED_VERSION" >> $GITHUB_ENV
-          export ORDERING_VERSION=$(gh api /user/packages/container/ordering/versions | jq -r '.[0].metadata.container.tags[0]')
+          export ORDERING_VERSION=$(gh api user/packages/container/ordering/versions | jq -r '.[0].metadata.container.tags[0]')
           echo "ORDERING_VERSION=$ORDERING_VERSION" >> $GITHUB_ENV
-          export CATALOG_VERSION=$(gh api /user/packages/container/catalog/versions | jq -r '.[0].metadata.container.tags[0]')   
+          export CATALOG_VERSION=$(gh api user/packages/container/catalog/versions | jq -r '.[0].metadata.container.tags[0]')   
           echo "CATALOG_VERSION=$CATALOG_VERSION" >> $GITHUB_ENV
-
+      # patch the deployment files with the correct versions.
+      # we do this for catalog, frontend and ordering
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
         with:
@@ -50,7 +56,8 @@ jobs:
           files: '["${{github.workspace}}/${{env.deploymentfileFolder}}/ordering.yaml"]'
         env: 
           Build.version: ${{env.ORDERING_VERSION}}
-
+      # create a release with the version provided by package push that 
+      # contains the deployment files
       - name: create a relase with version provided by package push
         uses: softprops/action-gh-release@v1
         with:
@@ -61,5 +68,3 @@ jobs:
             ${{github.workspace}}/${{env.deploymentfileFolder}}/frontend.yaml
             ${{github.workspace}}/${{env.deploymentfileFolder}}/ordering.yaml
             ${{github.workspace}}/${{env.deploymentfileFolder}}/catalog.yaml
-  
-

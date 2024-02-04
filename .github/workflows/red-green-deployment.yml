@@ -1,7 +1,7 @@
 name: "chapter 09: red green deployment globoticket"
 env:
   appname: globoticket
-  resourcegroup: globoticket
+  resourcegroup: actionsinaction
   slotname: staging
 on:
   release: 

@@ -9,7 +9,7 @@ on:
 
 env:
   deploymentfileFolder: 'deployment-automation'
-  GH_TOKEN: ${{ github.token }} #required for gh tool
+  GH_TOKEN: ${{ secrets.EXTENDED_ACCESSTOKEN }} #required for gh tool
 
 jobs:
   release:

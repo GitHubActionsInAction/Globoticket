@@ -23,15 +23,15 @@ jobs:
         uses: actions/checkout@v3
       - name: Retrieve latest image version frontend 
         run: |
-          export FRONTED_VERSION=$(gh api /user/packages/container/frontend/versions | jq -r '.[0].metadata.container.tags[0]') 
+          export FRONTED_VERSION=$(gh api user/packages/container/frontend/versions | jq -r '.[0].metadata.container.tags[0]') 
           echo "FRONTED_VERSION=$FRONTED_VERSION" >> $GITHUB_ENV
       - name: Retrieve latest image version ordering 
         run: |
-          export ORDERING_VERSION=$(gh api /user/packages/container/ordering/versions | jq -r '.[0].metadata.container.tags[0]')
+          export ORDERING_VERSION=$(gh api user/packages/container/ordering/versions | jq -r '.[0].metadata.container.tags[0]')
           echo "ORDERING_VERSION=$ORDERING_VERSION" >> $GITHUB_ENV
       - name: Retrieve latest image version catalog 
         run: |
-          export CATALOG_VERSION=$(gh api /user/packages/container/catalog/versions | jq -r '.[0].metadata.container.tags[0]')   
+          export CATALOG_VERSION=$(gh api user/packages/container/catalog/versions | jq -r '.[0].metadata.container.tags[0]')   
           echo "CATALOG_VERSION=$CATALOG_VERSION" >> $GITHUB_ENV
 
       - name: Replace tokens
